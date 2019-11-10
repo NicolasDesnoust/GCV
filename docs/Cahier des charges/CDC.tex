@@ -1,0 +1,48 @@
+%
+%	Template de cahier des charges minimaliste.
+%	Auteur: DESNOUST Nicolas.
+%
+
+\input{Parametres}
+
+\begin{document}
+
+	\pagestyle{empty} % enlève le numéro de page sur la page de garde
+	\setbackground{background.png}
+	
+	\input{PageDeGarde}
+
+	\newpage
+	\pagestyle{plain} % réaffiche le numéro de page pour toutes les pages
+	\setbackground{backgroundSTD.png}
+
+	\tableofcontents
+
+	\newpage
+	\setbackground{backgroundSTD.png}
+
+	\input{HistoriqueDesVersions}
+
+	\newpage
+	\setbackground{backgroundSTD.png}
+
+	\input{PresentationDesParties}
+
+	\input{PresentationDuProjet}
+
+	\newpage
+	\setbackground{backgroundSTD.png}
+
+	\input{SpecificitesFonctionnelles}
+
+	\newpage
+	\setbackground{backgroundSTD.png}
+
+	\input{SpecificitesTechniques}
+
+	\newpage
+	\setbackground{backgroundSTD.png}
+
+	\input{Planning}
+
+\end{document}

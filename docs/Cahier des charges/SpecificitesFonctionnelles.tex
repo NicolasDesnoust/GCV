@@ -1,0 +1,20 @@
+% Décrire les fonctionnalités générales de l'application de gestion de CV (Créer son profil, coopter, créer son cv, ajouter des activités, etc).
+\section{\textbf{Spécificités fonctionnelles}}
+	
+	\subsection{\textbf{Création de personnes}}
+		L'application doit permettre la création de personnes. Cela peut se faire uniquement par cooptation (recommander une autre personne). Il faut s'être connecté au préalable. Une personne "administrateur" doit être créée initialement ou lorsque la table associée est vide afin de pouvoir en créer d'autres.
+
+	\subsection{\textbf{Authentification des utilisateurs}}
+		Il est nécessaire de fournir une fonctionnalité d'authentification afin de pouvoir effectuer des opérations personnelles/sensibles telles que modifier ses propres informations, renseigner son CV ou coopter.
+
+	\subsection{\textbf{Édition de personnes}}
+		Une personne authentifiée doit être à même de modifier ses propres informations. Les modifications sont bloquées dans le cas contraire. 
+
+	\subsection{\textbf{Création / Édition de CV}}
+		La création et l'édition de CV ne sont possibles qu'une fois authentifié. Un utilisateur ne peut renseigner que son propre CV. Cette fonctionnalité est étroitement liée à l'ajout et la Suppression d'activités (voir ci-dessous) et pourrait être transparente.
+
+	\subsection{\textbf{Ajout / Édition / Suppression d'activités}}
+		Un CV consiste en une liste d'activités. Un utilisateur connecté doit donc pouvoir ajouter, supprimer et éditer ses activités lorsqu'il créé ou modifie son CV.
+
+	\subsection{\textbf{Consultation des personnes et CV}}
+		La consultation de la liste (personnes et CV) doit pouvoir se faire sans être authentifié. Elle doit être ergonomique, c'est-à-dire via des recherches en fonction d'une partie d'un nom, d'un prénom ou du titre d'une activité. Les recherches retournent une liste de personnes.

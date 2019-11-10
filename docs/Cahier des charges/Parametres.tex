@@ -1,0 +1,41 @@
+% !TEX options=--enable-write18
+\documentclass[12pt]{article}
+\usepackage[french]{babel}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor, etoolbox}
+\usepackage{color, array}
+\usepackage{colortbl}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{enumitem}
+
+\definecolor{rougeBordeaux}{RGB}{87, 36, 40}
+
+%https://pixabay.com/fr/illustrations/carri%C3%A8re-curriculum-vitae-embauche-3449422/
+\newcommand{\setbackground}[1] {
+	\tikz[remember picture, overlay] \node[opacity=1, inner sep=0pt] at (current page.center) {
+		\includegraphics[width=\paperwidth, height=\paperheight]{#1}
+	};
+}
+
+\newcommand{\important}[1] {\textbf{\textcolor{rougeBordeaux}{#1}}}
+
+\usetikzlibrary{tikzmark,fit}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	top=20mm,
+}
+
+\renewcommand{\arraystretch}{1.8} % redéfini la hauteur des lignes d'un tableau
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\contentsname}{Sommaire} % Renomme Table des matières en Sommaire
