@@ -76,7 +76,7 @@ public class TestDao {
     }
     
     @Test
-    public void testFindByProperty() throws Exception {
+    public void testFindByStringProperty() throws Exception {
     	String toFind = "NOUS";
     	
     	dao.create(person);

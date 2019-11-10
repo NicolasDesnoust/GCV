@@ -1,6 +1,8 @@
 package gcv.beans;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import gcv.util.PasswordHash;
 
 //import org.springframework.format.annotation.DateTimeFormat;
 
@@ -52,8 +56,8 @@ public class Person implements Serializable {
 	private Date birthDate;
 
 	@Basic(optional = false)
-	@Column(name = "password", length = 20, nullable = false)
-	private String password;
+	@Column(name = "password_hash", length = 102, nullable = false)
+	private String passwordHash;
 
 	//TODO: Revoir le cascade
 	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER, mappedBy = "owner")
@@ -71,7 +75,7 @@ public class Person implements Serializable {
 		this.mail = mail;
 		this.webSite = webSite;
 		this.birthDate = birthDate;
-		this.password = password;
+		setPassword(password);
 	}
 
 	public Integer getPersonID() {
@@ -122,12 +126,17 @@ public class Person implements Serializable {
 		this.birthDate = birthDate;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPasswordHash() {
+		return passwordHash;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		try {
+			passwordHash = PasswordHash.createHash(password);
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Collection<Activity> getCv() {
@@ -160,8 +169,7 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		return "Person [PersonID = " + PersonID + ", firstName = " + firstName + ", lastName = " + lastName
-				+ ", mail = " + mail + ", webSite = " + webSite + ", birthDate = " + birthDate + ", password = "
-				+ password + ", cv = " + cv + "]";
+				+ ", mail = " + mail + ", webSite = " + webSite + ", birthDate = " + birthDate + ", cv = " + cv + "]";
 	}
 
 }
