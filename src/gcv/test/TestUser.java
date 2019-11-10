@@ -56,10 +56,6 @@ public class TestUser {
     }
     //TODO: A TESTER
     /*
-		Person readPerson(Person person);
-		Activity readActivity(Activity activity);
-		Collection<Person> readAllPersons();
-		Collection<Activity> readAllActivities();
 		boolean createActivity(Person person, Activity activity);
 		boolean createPerson(Person person);
 		Activity updateActivity(Person person, Activity activity);
@@ -67,61 +63,4 @@ public class TestUser {
 		void removeActivity(Person person, Activity activity);
 		void removePerson(Person person);
 	*/
-    
-    @Test
-    public void testFindAllPersonsByFirstName() {
-    	Collection<Person> expected = new ArrayList<Person>(Arrays.asList(person));
-    	String toFind = "cola";
- 
-    	// GIVEN
-        Mockito.when(dao.findByStringProperty(Person.class, "firstName", "%" + toFind + "%"))
-        	.thenReturn(expected);
-
-        // WHEN 
-        Collection<Person> result = user.findAllPersonsByFirstName(toFind);
-
-        // THEN
-        for (Person p : result)
-        	assertTrue(p.getFirstName().contains(toFind));
-    }
-    
-    @Test
-    public void testFindAllPersonsByLastName() {
-    	Collection<Person> expected = new ArrayList<Person>(Arrays.asList(person));
-    	String toFind = "SNOU";
- 
-    	// GIVEN
-        Mockito.when(dao.findByStringProperty(Person.class, "lastName", "%" + toFind + "%"))
-        	.thenReturn(expected);
-
-        // WHEN 
-        Collection<Person> result = user.findAllPersonsByLastName(toFind);
-
-        // THEN
-        for (Person p : result)
-        	assertTrue(p.getLastName().contains(toFind));
-    }
-    
-    @Test
-    public void testFindAllPersonsByActivity() {
-    	Collection<Person> expected = new ArrayList<Person>(Arrays.asList(person));
-    	String toFind = "ILD";
- 
-    	// GIVEN
-        Mockito.when(dao.findAllPersonsWithActivityEntitled("%" + toFind + "%"))
-        	.thenReturn(expected);
-
-        // WHEN 
-        Collection<Person> result = user.findAllPersonsByActivity(toFind);
-
-        // THEN
-        for (Person p : result) {
-        	boolean have = false;
-			for(Activity a : p.getCv()) {
-				if (a.getTitle().contains("ILD"))
-					have = true;
-	    	}
-			assertTrue(have);
-		}
-    }
 }

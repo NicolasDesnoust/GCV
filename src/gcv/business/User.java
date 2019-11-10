@@ -20,13 +20,11 @@ import gcv.dao.ISpecificDao;
 import gcv.util.PasswordHash;
 
 @Stateful(name = "user")
+/* EJB stateful qui représente un utilisateur (authentifié ou pas). */
 public class User implements IUser {
 
 	@EJB(beanName = "specificDao")
 	ISpecificDao dao;
-
-	/* Au cas où la manière de définir un utilisateur anonyme change. */
-	// private final String anonymous = "";
 
 	private String login = "";
 	private boolean connected = false;
@@ -66,41 +64,6 @@ public class User implements IUser {
 	@Override
 	public String getLogin() {
 		return login;
-	}
-
-	@Override
-	public Collection<Person> findAllPersonsByFirstName(String input) {
-		return dao.findByStringProperty(Person.class, "firstName", "%" + input + "%");
-	}
-
-	@Override
-	public Collection<Person> findAllPersonsByLastName(String input) {
-		return dao.findByStringProperty(Person.class, "lastName", "%" + input + "%");
-	}
-
-	@Override
-	public Collection<Person> findAllPersonsByActivity(String input) {
-		return dao.findAllPersonsWithActivityEntitled("%" + input + "%");
-	}
-
-	@Override
-	public Person readPerson(Person person) {
-		return dao.read(Person.class, person);
-	}
-
-	@Override
-	public Activity readActivity(Activity activity) {
-		return dao.read(Activity.class, activity);
-	}
-
-	@Override
-	public Collection<Person> readAllPersons() {
-		return dao.readAll(Person.class);
-	}
-
-	@Override
-	public Collection<Activity> readAllActivities() {
-		return dao.readAll(Activity.class);
 	}
 
 	/* Une activité ne peut être créée indépendamment d'une personne. */

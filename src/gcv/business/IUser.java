@@ -1,34 +1,17 @@
 package gcv.business;
 
-import java.util.Collection;
-
 import javax.ejb.Local;
 
 import gcv.beans.Activity;
 import gcv.beans.Person;
 
 @Local
+/* Interface d'un EJB stateful qui représente un utilisateur (authentifié ou pas). */
 public interface IUser {
 	
 	boolean login(String login, String pwd);
 	void logout();
 	String getLogin();
-
-	/*********************************************************
-	******   Opérations sans authentification requise	******
-	*********************************************************/
-	
-	/* Lectures spécifiques */
-	Collection<Person> findAllPersonsByFirstName(String input);
-	Collection<Person> findAllPersonsByLastName(String input);
-	Collection<Person> findAllPersonsByActivity(String input);
-	
-	/* Lectures standard */
-	Person readPerson(Person person);
-	Activity readActivity(Activity activity);
-	Collection<Person> readAllPersons();
-	Collection<Activity> readAllActivities();
-	
 
 	/*********************************************************
 	******   Opérations avec authentification requise	******
