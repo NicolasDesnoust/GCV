@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import gcv.beans.Person;
 
 @Local
-public interface ISpecificDao extends IGenericDao {
+public interface Dao extends GenericDao {
 
 	Collection<Person> findAllPersonsWithActivityEntitled(String title);
 

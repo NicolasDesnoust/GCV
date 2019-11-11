@@ -18,8 +18,8 @@ import javax.persistence.metamodel.SingularAttribute;
 import gcv.beans.Activity;
 import gcv.beans.Person;
 
-@Stateless(name = "specificDao", description = "Méthodes CRUD pour les beans du projet.")
-public class SpecificDao extends GenericDao implements ISpecificDao {
+@Stateless(name = "jpadao", description = "Méthodes CRUD pour les beans du projet.")
+public class JpaDao extends JpaGenericDao implements Dao {
 		// Récupère les personnes liées au titre d'une activité.
 		// TODO: verifier si on a pas deux fois la meme personne si elle contient
 		// deux activités qui matchent la recherche

@@ -17,13 +17,13 @@ import org.junit.Test;
 import gcv.beans.Activity;
 import gcv.beans.Nature;
 import gcv.beans.Person;
-import gcv.dao.ISpecificDao;
+import gcv.dao.Dao;
 //TODO: Utiliser DBUnit.
 
 public class TestDao {
 	
-	@EJB(beanName="specificDao")
-    ISpecificDao dao;
+	@EJB(beanName="jpadao")
+    Dao dao;
     
     private Person person;
     

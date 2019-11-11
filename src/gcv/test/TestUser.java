@@ -21,16 +21,16 @@ import org.mockito.Mockito;
 import gcv.beans.Activity;
 import gcv.beans.Nature;
 import gcv.beans.Person;
-import gcv.business.IUser;
-import gcv.dao.ISpecificDao;
-import gcv.dao.SpecificDao;
+import gcv.business.User;
+import gcv.dao.Dao;
+import gcv.dao.JpaDao;
 
 public class TestUser {
 	
-    ISpecificDao dao;
+    Dao dao;
 	
 	@EJB(beanName="user")
-    IUser user;
+    User user;
 	
 	Person person;
 	Activity activity;
@@ -41,7 +41,7 @@ public class TestUser {
         EJBContainer.createEJBContainer().getContext().bind("inject", this);
         
         // La DAO est factice ici pour isoler les tests.
-        dao = Mockito.mock(ISpecificDao.class);
+        dao = Mockito.mock(Dao.class);
         
         assertNotNull(dao);
         assertNotNull(user);
@@ -62,5 +62,66 @@ public class TestUser {
 		Person updatePerson(Person person);
 		void removeActivity(Person person, Activity activity);
 		void removePerson(Person person);
+		Person readPerson(Person person);
+		Activity readActivity(Activity activity);
+		Collection<Person> readAllPersons();
+		Collection<Activity> readAllActivities();
 	*/
+    
+    @Test
+    public void testFindAllPersonsByFirstName() {
+    	Collection<Person> expected = new ArrayList<Person>(Arrays.asList(person));
+    	String toFind = "cola";
+ 
+    	// GIVEN
+        Mockito.when(dao.findByStringProperty(Person.class, "firstName", "%" + toFind + "%"))
+        	.thenReturn(expected);
+
+        // WHEN 
+        Collection<Person> result = user.findAllPersonsByFirstName(toFind);
+
+        // THEN
+        for (Person p : result)
+        	assertTrue(p.getFirstName().contains(toFind));
+    }
+    
+    @Test
+    public void testFindAllPersonsByLastName() {
+    	Collection<Person> expected = new ArrayList<Person>(Arrays.asList(person));
+    	String toFind = "SNOU";
+ 
+    	// GIVEN
+        Mockito.when(dao.findByStringProperty(Person.class, "lastName", "%" + toFind + "%"))
+        	.thenReturn(expected);
+
+        // WHEN 
+        Collection<Person> result = user.findAllPersonsByLastName(toFind);
+
+        // THEN
+        for (Person p : result)
+        	assertTrue(p.getLastName().contains(toFind));
+    }
+    
+    @Test
+    public void testFindAllPersonsByActivity() {
+    	Collection<Person> expected = new ArrayList<Person>(Arrays.asList(person));
+    	String toFind = "ILD";
+ 
+    	// GIVEN
+        Mockito.when(dao.findAllPersonsWithActivityEntitled("%" + toFind + "%"))
+        	.thenReturn(expected);
+
+        // WHEN 
+        Collection<Person> result = user.findAllPersonsByActivity(toFind);
+
+        // THEN
+        for (Person p : result) {
+        	boolean have = false;
+			for(Activity a : p.getCv()) {
+				if (a.getTitle().contains("ILD"))
+					have = true;
+	    	}
+			assertTrue(have);
+		}
+    }
 }
