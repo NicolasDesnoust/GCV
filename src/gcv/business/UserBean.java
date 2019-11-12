@@ -74,7 +74,7 @@ public class UserBean implements User {
 		 * l'utilisateur est connecté sur le compte qu'il essaie de modifier et non un
 		 * autre.
 		 */
-		if (!connected || !login.equals(String.valueOf(person.getPersonID())))
+		if (!connected || !login.equals(String.valueOf(activity.getOwner().getPersonID())))
 			return false;
 
 		person.addActivity(activity);

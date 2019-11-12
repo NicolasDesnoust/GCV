@@ -3,6 +3,7 @@ package gcv.beans;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -159,6 +160,7 @@ public class Person implements Serializable {
 		if (cv != null) {
 			if (cv.contains(activity)) {
 				cv.remove(activity);
+				activity.setOwner(null);
 				return true;
 			}
 		}
@@ -168,8 +170,10 @@ public class Person implements Serializable {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+
 		return "Person [PersonID = " + PersonID + ", firstName = " + firstName + ", lastName = " + lastName
-				+ ", mail = " + mail + ", webSite = " + webSite + ", birthDate = " + birthDate + ", cv = " + cv + "]";
+				+ ", mail = " + mail + ", webSite = " + webSite + ", birthDate = " + formater.format(birthDate) + ", cv = " + cv + "]";
 	}
 
 }

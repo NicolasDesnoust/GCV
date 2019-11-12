@@ -2,15 +2,8 @@ package gcv.test;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-
-import javax.ejb.EJB;
-import javax.ejb.embeddable.EJBContainer;
-
 import org.junit.Test;
 
-import gcv.beans.Person;
-import gcv.dao.ISpecificDao;
 import gcv.util.PasswordHash;
 
 public class TestPasswordHash {
