@@ -22,6 +22,8 @@ public class JpaGenericDao implements GenericDao {
 	@PersistenceContext(unitName = "GCV_MySQL")
 	EntityManager em;
 
+	private final int batchSize = 25;
+
 	@PostConstruct
 	public void start() {
 		System.out.println("Starting " + this);
@@ -72,6 +74,22 @@ public class JpaGenericDao implements GenericDao {
 		em.persist(entity);
 		System.err.println("Entity added.");
 		return (entity);
+	}
+
+	@Override
+	public <T> void createAll(T[] entity) {
+		int compt = 0;
+		for (int i = 0; i < entity.length; i++) {
+			em.persist(entity[i]);
+			compt++;
+			
+			if (compt % batchSize == 0) {
+				// Flush a batch of inserts and release memory.
+				em.flush();
+				em.clear();
+			}
+		}
+		System.err.println("Entities added.");
 	}
 
 	@Override
