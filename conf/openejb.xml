@@ -3,8 +3,8 @@
     <Resource id="GCV_MySQL_DS" type="DataSource">
         JdbcDriver com.mysql.jdbc.Driver
         JdbcUrl jdbc:mysql://localhost:3306/GCV?serverTimezone=Europe/Berlin
-        UserName <!-- à renseigner -->
-        Password <!-- à renseigner -->
+        UserName nicolas
+        Password Nicolas622!
         JtaManaged true
     </Resource>
 

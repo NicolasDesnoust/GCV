@@ -20,4 +20,6 @@ public interface GenericDao {
 	<T> void remove(Class<T> clazz, Object id);
 
 	<T> Collection<T> findByStringProperty(Class<T> clazz, String propertyName, String propertyValue);
+
+	<T>	void createAll(T[] entity);
 }
