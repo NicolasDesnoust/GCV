@@ -15,26 +15,56 @@ import gcv.beans.Person;
 import javax.ejb.EJB;
 import javax.ejb.embeddable.EJBContainer;
 
+/**
+ * Classe de Test pour le remplissage de la base de données en masse.
+ * 
+ * Permet d'ajouter beaucoup de personnes générées aléatoirement dans la base de données afin d'évaluer 
+ * les performances de l'application.
+ * 
+ * @author Nicolas DESNOUST
+ * @author Serigne Bassirou Mbacké LY
+ * 
+ * @see gcv.test.ExecutorBean
+ */
 public class TestFillDB {
 	
+	/** Fournit les tâches asynchrones exécutant la génération et la persistence de
+	 * groupes de personnes.
+	 */
 	@EJB(beanName = "executorBean")
 	ExecutorBean executorBean;
 	
-	/* Modifier TASKS en fonction du nombre de processeurs disponibles. */
-	private final int PERSONS_TO_CREATE = 100_000, TASKS = 6;
+	/**Constante indiquant combien de personnes au total doivent être rajoutées dans 
+	 * la base de données.
+	 */
+	private final int PERSONS_TO_CREATE = 100_000;
+	
+	/** Constante indiquant en combien de tâches la génération des personnes va se répartir.
+	 *  Elle doit coïncider avec le nombre de processeurs disponibles.
+	 */
+	private final int TASKS = 3;
 
+	/**
+	 * Constructeur du test. 
+	 * Le test est injecté dans le container pour que l'annotation d'EJB soit traitée.
+	 * 
+	 * @throws Exception
+	 */
 	public TestFillDB() throws Exception {
-		// Nous injectons le test dans le container pour que
-		// l'annotation @EJB soit traitée
 		EJBContainer.createEJBContainer().getContext().bind("inject", this);
 	}
 
-	/*
-	 * Génère un ensemble de personnes aléatoire et l'insère dans la base de
-	 * données. L'ensemble est de taille PERSONS_TO_CREATE. En fonction de ce
-	 * paramètre l'opération peut prendre un certain temps. Il est possible
-	 * d'exporter ensuite le contenu de la base de données sous forme de requêtes
-	 * d'insertion pour le faire plus rapidement. */
+	/**
+	 * Génère un ensemble de personnes aléatoires et l'insère dans la base de
+	 * données. 
+	 * L'ensemble est de taille PERSONS_TO_CREATE. En fonction de ce
+	 * paramètre l'opération peut prendre un certain temps. 
+	 * La tâche est divisée en sous-tâches pour accélérer le processus. 
+	 * Il est possible d'exporter ensuite le contenu de la base de données sous forme de requêtes
+	 * d'insertion pour le faire plus rapidement par la suite. 
+	 *
+	 * @throws Exception
+	 */
 	@Test
 	public void fillDataBaseRandomly() throws Exception {
 		final long start = System.nanoTime();

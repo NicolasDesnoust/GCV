@@ -11,11 +11,13 @@ import javax.crypto.spec.PBEKeySpec;
 
 import java.math.BigInteger;
 
-/* Adapté à partir de : https://gist.github.com/jtan189/3804290
+/**Hachage salé de mots de passe via PBKDF2.
  * 
- * PBKDF2 salted password hashing.
- * Author: havoc AT defuse.ca
- * www: http://crackstation.net/hashing-security.htm
+ * Adapté à partir de : https://gist.github.com/jtan189/3804290
+ * 
+ * @author havoc AT defuse.ca
+ * 
+ * @see <a href="http://crackstation.net/hashing-security.htm">http://crackstation.net/hashing-security.htm</a>
  */
 public class PasswordHash {
 
@@ -29,22 +31,12 @@ public class PasswordHash {
     public static final int ITERATION_INDEX = 0;
     public static final int SALT_INDEX = 1;
     public static final int PBKDF2_INDEX = 2;
-    
-	@PostConstruct
-	public void start() {
-		System.out.println("Starting " + this);
-	}
-
-	@PreDestroy
-	public void stop() {
-		System.out.println("Stopping " + this);
-	}
 
     /**
-     * Returns a salted PBKDF2 hash of the password.
+     * Renvoie un hachage salé de type PBKDF2 du mot de passe.
      *
-     * @param   password    the password to hash
-     * @return              a salted PBKDF2 hash of the password
+     * @param password Le mot de passe à hacher.
+     * @return Un hachage salé de type PBKDF2 du mot de passe.
      */
     public static String createHash(String password)
         throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -52,30 +44,30 @@ public class PasswordHash {
     }
 
     /**
-     * Returns a salted PBKDF2 hash of the password.
+     * Renvoie un hachage salé de type PBKDF2 du mot de passe.
      *
-     * @param   password    the password to hash
-     * @return              a salted PBKDF2 hash of the password
+     * @param password Le mot de passe à hacher.
+     * @return Un hachage salé de type PBKDF2 du mot de passe.
      */
     public static String createHash(char[] password)
         throws NoSuchAlgorithmException, InvalidKeySpecException {
-        // Generate a random salt
+        // Génère un sel aléatoire
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTES];
         random.nextBytes(salt);
 
-        // Hash the password
+        // Hachage du mot de passe
         byte[] hash = pbkdf2(password, salt, PBKDF2_ITERATIONS, HASH_BYTES);
-        // format iterations:salt:hash
+        // formatage itérations:sel:hash
         return PBKDF2_ITERATIONS + ":" + toHex(salt) + ":" +  toHex(hash);
     }
 
     /**
-     * Validates a password using a hash.
+     * Valide un mot de passe en utilisant un hash.
      *
-     * @param   password    the password to check
-     * @param   goodHash    the hash of the valid password
-     * @return              true if the password is correct, false if not
+     * @param password Le mot de passe à vérifier.
+     * @param goodHash Le hash du vrai mot de passe.
+     * @return true si le mot de passe est correct, false sinon.
      */
     public static boolean validatePassword(String password, String goodHash)
         throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -83,11 +75,11 @@ public class PasswordHash {
     }
 
     /**
-     * Validates a password using a hash.
+     * Valide un mot de passe en utilisant un hash.
      *
-     * @param   password    the password to check
-     * @param   goodHash    the hash of the valid password
-     * @return              true if the password is correct, false if not
+     * @param password Le mot de passe à vérifier.
+     * @param goodHash Le hash du vrai mot de passe.
+     * @return true si le mot de passe est correct, false sinon.
      */
     public static boolean validatePassword(char[] password, String goodHash)
         throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -105,13 +97,14 @@ public class PasswordHash {
     }
 
     /**
-     * Compares two byte arrays in length-constant time. This comparison method
-     * is used so that password hashes cannot be extracted from an on-line 
-     * system using a timing attack and then attacked off-line.
+     * Compare deux tableaux de bytes en un temps proportionnel à leur longueur.
+     * Cette méthode de comparaison est utilisée pour que les hashs de mots de passe
+     * ne puissent pas être extraits à partir d'un système en ligne en utilisant une
+     * attaque temporelle puis une attaque hors-ligne.
      * 
-     * @param   a       the first byte array
-     * @param   b       the second byte array 
-     * @return          true if both byte arrays are the same, false if not
+     * @param a Le premier tableau de bytes.
+     * @param b Le second tableau de bytes.
+     * @return true si les deux tableaux sont égaux, false sinon.
      */
     private static boolean slowEquals(byte[] a, byte[] b) {
         int diff = a.length ^ b.length;
@@ -121,13 +114,13 @@ public class PasswordHash {
     }
 
     /**
-     *  Computes the PBKDF2 hash of a password.
+     *  Calcul le hash de type PBKDF2 d'un mot de passe.
      *
-     * @param   password    the password to hash.
-     * @param   salt        the salt
-     * @param   iterations  the iteration count (slowness factor)
-     * @param   bytes       the length of the hash to compute in bytes
-     * @return              the PBDKF2 hash of the password
+     * @param password Le mot de passe à hacher.
+     * @param salt Le sel.
+     * @param iterations Le nombre d'itérations (facteur de lenteur).
+     * @param bytes La longueur du hash à calculer en bytes.
+     * @return Le hash de type PBKDF2 du mot de passe.
      */
     private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes)
         throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -137,10 +130,10 @@ public class PasswordHash {
     }
 
     /**
-     * Converts a string of hexadecimal characters into a byte array.
+     * Converti une chaîne de caractères haxadécimaux en un tableau de bytes.
      *
-     * @param   hex         the hex string
-     * @return              the hex string decoded into a byte array
+     * @param hex La chaîne de caractères haxadécimaux.
+     * @return La chaîne de caractères haxadécimaux décodée dans un tableau de bytes.
      */
     private static byte[] fromHex(String hex) {
         byte[] binary = new byte[hex.length() / 2];
@@ -152,10 +145,10 @@ public class PasswordHash {
     }
 
     /**
-     * Converts a byte array into a hexadecimal string.
+     * Converti un tableau de bytes en une chaîne de caractères haxadécimaux.
      *
-     * @param   array       the byte array to convert
-     * @return              a length*2 character string encoding the byte array
+     * @param array Le tableau de bytes à convertir.
+     * @return une chaîne de caractères de longueur double codant le tableau de bytes.
      */
     private static String toHex(byte[] array)
     {

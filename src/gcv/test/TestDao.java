@@ -39,14 +39,15 @@ public class TestDao {
 
     @Test
     public void testCreatePerson() throws Exception {
-    	Person expected = dao.create(person);
+    	dao.create(person);
 		 
-		assertNotNull (expected);
+		//assertNotNull (expected);
     }
     
     @Test
     public void testReadPerson() throws Exception {
-    	int expected = dao.create(person).getPersonID();
+    	dao.create(person);
+    	int expected = person.getPersonID();
 		 
     	int value = dao.read(Person.class, expected).getPersonID();
 		 
@@ -55,7 +56,8 @@ public class TestDao {
     
     @Test
     public void testUpdatePerson() throws Exception {
-    	Person toUpdate = dao.create(person);
+    	dao.create(person);
+    	Person toUpdate = person;
 		
     	String expected = "nico"; 
     	toUpdate.setFirstName(expected);
@@ -66,7 +68,8 @@ public class TestDao {
     
     @Test
     public void testRemovePerson() throws Exception {
-    	int toRemove = dao.create(person).getPersonID();
+    	dao.create(person);
+    	int toRemove = person.getPersonID();
 		
     	assertNotNull(dao.read(Person.class, toRemove));
 		
@@ -96,7 +99,8 @@ public class TestDao {
     	person.addActivity(new Activity(2018,
     			Nature.EDUCATION, "Master 1 ILD", "M1 ILD à SJ.", "mail@gmail.com"));
     	
-    	Person result = dao.create(person);
+    	dao.create(person);
+    	Person result = person;
     	
     	Collection<Person> persons = 
     			dao.findAllPersonsWithActivityEntitled("%ILD%");
