@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.value {
+	font-weight: bold;
+}
+
+body {
+	background-color: #323232;
+	color: #dedede;
+	font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
