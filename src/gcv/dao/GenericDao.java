@@ -1,6 +1,7 @@
 package gcv.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Local;
 
@@ -38,6 +39,8 @@ public interface GenericDao {
 	 * @return La collection d'entités.
 	 */
 	public <T> Collection<T> readAll(Class<T> clazz);
+	
+	public <T> List<T> readAllBetween(Class<T> clazz, int start, int maxResults);
 
 	/**
 	 * Méthode générique de création d'entité dans une base de données.
@@ -89,4 +92,6 @@ public interface GenericDao {
 	 * @param entity L'entité à faire persister.
 	 */
 	public <T>	void createAll(T[] entity);
+
+	public <T> int getRowsCount(Class<T> clazz);
 }

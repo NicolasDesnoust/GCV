@@ -11,24 +11,18 @@
 			personnes enregistrées</h3>
 
 		<h:form id="form">
-			<p:dataGrid var="person" value="#{personController.getPersons()}"
-				columns="3" layout="grid" rows="12" paginator="true"
-				id="personsGrid"
-				lazy="true"
-				pageLinks="10"
+			<p:dataGrid var="person" value="#{personController.getLazyModel()}"
+				columns="3" layout="grid" rows="12" paginator="true" first="3"
+				id="personsGrid" lazy="true" pageLinks="5" widgetVar="grid"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="6,12,16">
-
-				<f:facet name="header">
-            		Personnes enregistrées
-        		</f:facet>
-
+				
 				<p:panel header="#{person.firstName} #{person.lastName}"
 					style="text-align:center">
 					<h:panelGrid columns="1" style="width:100%">
-						 
 
-				<!--		<h:outputText value="#{car.year}" />green
+
+						<!--		<h:outputText value="#{car.year}" />green
  		<h:commandLink styleClass="btn btn-primary btn-xs"
 	action="#{personController.showPerson(person)}" value="#{person}" />
  -->
