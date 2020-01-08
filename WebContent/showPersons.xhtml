@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/mylayout.xhtml">
+	<ui:define name="content">
+
+		<h3 style="margin-top:1em; margin-bottom:0.5em;">Liste des personnes enregistrées</h3>
+
+		<style type="text/css">
+.value {
+	font-weight: bold;
+}
+body {
+  background-color: #323232;
+  color: #dedede;
+  font-family: "Open Sans","Helvetica Neue",sans-serif;
+}
+</style>
+
+		<h:form id="form">
+			<p:dataGrid var="person" value="#{personController.getPersons()}"
+				columns="3" layout="grid" rows="12" paginator="true"
+				id="personsGrid"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="6,12,16">
+
+				<f:facet name="header">
+            		Personnes enregistrées
+        		</f:facet>
+
+				<p:panel header="#{person.firstName} #{person.lastName}"
+					style="text-align:center">
+					<h:panelGrid columns="1" style="width:100%">
+						<!-- <p:graphicImage name="demo/images/car/#{car.brand}.gif" />
+
+						<h:outputText value="#{car.year}" />green
+ -->		<!-- <h:commandLink styleClass="btn btn-primary btn-xs"
+	action="#{personController.showPerson(person)}" value="#{person}" />
+ -->
+						<p:commandLink action="#{personController.showPerson(person)}" title="Voir les détails">
+							<h:outputText styleClass="pi pi-search" style="margin:0 auto;" />
+							<f:setPropertyActionListener value="#{person}"
+								target="#{personController.thePerson}" />
+						</p:commandLink>
+					</h:panelGrid>
+				</p:panel>
+
+			</p:dataGrid>
+
+			<p:dialog header="Informations détaillées" widgetVar="personDialog"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="personDetail" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty personController.thePerson}"
+						columnClasses="label,value">
+						<!-- <f:facet name="header">
+							<p:graphicImage
+								name="demo/images/car/#{dataGridView.selectedCar.brand}-big.gif" />
+						</f:facet>
+
+						<h:outputText value="Id:" />
+						<h:outputText value="#{dataGridView.selectedCar.id}" />
+
+						<h:outputText value="Year" />
+						<h:outputText value="#{dataGridView.selectedCar.year}" />
+
+						<h:outputText value="Color:" />
+						<h:outputText value="#{dataGridView.selectedCar.color}"
+							style="color:#{dataGridView.selectedCar.color}" />
+
+						<h:outputText value="Price" />
+						<h:outputText value="$#{dataGridView.selectedCar.price}" /> -->
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -42,6 +42,14 @@ public class UserBean implements User {
 	 */
 	private boolean connected = false;
 
+	/**
+	 * Retourne la valeur du booléen connected.
+	 * @return vrai si l'utilisateur est connecté, faux sinon.
+	 */
+	public boolean isConnected() {
+		return connected;
+	}
+	
 	/**Permet à un utilisateur de se connecter à son compte.
 	 * Recherche l'utilisateur associé à l'adresse email spécifiée (login).
 	 * S'il existe, compare son mot de passe à celui entré par la personne
@@ -92,7 +100,10 @@ public class UserBean implements User {
 	 */
 	@Override
 	public String getLogin() {
+		if (connected)
 		return login;
+		else
+			return "";
 	}
 
 	/** Fait persister une activité dans une base de données. Vérifie que l'utilisateur a 

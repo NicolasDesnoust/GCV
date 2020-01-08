@@ -82,7 +82,7 @@ public class TestUser {
 
         // THEN
         for (Person p : result)
-        	assertTrue(p.getFirstName().contains(toFind));
+        	assertTrue(p.getFirstName().toLowerCase().contains(toFind));
     }
     
     @Test
@@ -99,7 +99,7 @@ public class TestUser {
 
         // THEN
         for (Person p : result)
-        	assertTrue(p.getLastName().contains(toFind));
+        	assertTrue(p.getLastName().toUpperCase().contains(toFind));
     }
     
     @Test
@@ -118,7 +118,7 @@ public class TestUser {
         for (Person p : result) {
         	boolean have = false;
 			for(Activity a : p.getCv()) {
-				if (a.getTitle().contains("ILD"))
+				if (a.getTitle().toUpperCase().contains("ILD"))
 					have = true;
 	    	}
 			assertTrue(have);

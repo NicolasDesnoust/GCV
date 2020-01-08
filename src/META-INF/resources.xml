@@ -2,12 +2,12 @@
 
 <resources>
 
-<Resource id="myTestDataSource" type="javax.sql.DataSource">
-    JdbcDriver org.hsqldb.jdbcDriver
-    JdbcUrl jdbc:hsqldb:file:/tmp/ma-bd
-    UserName sa
-    Password
-    jtaManaged true
-</Resource>
+	<Resource id="GCV_MySQL_DS" type="javax.sql.DataSource">
+		JdbcDriver com.mysql.jdbc.Driver
+		JdbcUrl jdbc:mysql://localhost:3306/GCV?serverTimezone=Europe/Berlin
+		UserName root
+		Password Nicolas622!
+		JtaManaged true
+	</Resource>
 
 </resources>

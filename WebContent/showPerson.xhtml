@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<ui:composition template="/template/mylayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<c:set var="p" value="#{personController.thePerson}" />
+			<div class="jumbotron">
+				<h1>Person #{p.firstName}</h1>
+				<!-- <p>Id: #{c.id}</p>
+				<p>Name: #{c.name}</p>
+				<p>Hours: #{c.hours}</p>
+				<p>Description: #{c.description}</p>
+				<p>
+					<h:link outcome="hello" styleClass="btn btn-info">
+						<span>List of courses</span>
+					</h:link>
+				</p> -->
+			</div>
+
+			<h:form>
+				<p>
+					<h:commandLink action="editPerson" styleClass="btn btn-danger">
+						<span>Modifier</span>
+					</h:commandLink>
+				</p>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</html>

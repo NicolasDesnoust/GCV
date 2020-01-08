@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="title">GCV</ui:insert></title>
+	<h:outputStylesheet library="webjars"
+		name="bootstrap/3.3.7/css/bootstrap.min-jsf.css" />
+	<h:outputScript library="webjars" name="jquery/1.11.1/jquery.js" />
+	<h:outputScript library="webjars"
+		name="bootstrap/3.3.7/js/bootstrap.js" />
+</h:head>
+<h:body>
+	<div class="container">
+		<h1 style="margin-bottom: 0.5em;">GCV : Gestionnaire de C.V.</h1>
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:submenu label="File" icon="pi pi-file">
+					<p:submenu label="New" icon="pi pi-briefcase">
+						<p:menuitem value="Project" url="#" />
+						<p:menuitem value="Other" url="#" />
+					</p:submenu>
+					<p:menuitem value="Open" url="#" />
+					<p:separator />
+					<p:menuitem value="Quit" url="#" />
+				</p:submenu>
+
+				<p:submenu label="Edit" icon="pi pi-pencil">
+					<p:menuitem value="Undo" url="#" icon="pi pi-angle-double-left" />
+					<p:menuitem value="Redo" url="#" icon="pi pi-angle-double-right" />
+				</p:submenu>
+
+				<p:submenu label="Help" icon="pi pi-question">
+					<p:menuitem value="Contents" url="#" />
+					<p:submenu label="Search" icon="pi pi-search">
+						<p:submenu label="Text">
+							<p:menuitem value="Workspace" url="#" />
+						</p:submenu>
+						<p:menuitem value="File" url="#" />
+					</p:submenu>
+				</p:submenu>
+
+				<p:submenu label="Actions" icon="pi pi-cog">
+					<p:submenu label="Ajax" icon="pi pi-refresh">
+						<p:menuitem value="Save" action="#{menuView.save}"
+							icon="pi pi-save" update="messages" />
+						<p:menuitem value="Update" action="#{menuView.update}"
+							icon="pi pi-refresh" update="messages" />
+					</p:submenu>
+					<p:submenu label="Non-Ajax" icon="pi pi-clone">
+						<p:menuitem value="Delete" action="#{menuView.delete}"
+							icon="pi pi-times" update="messages" ajax="false" />
+					</p:submenu>
+				</p:submenu>
+
+				<p:menuitem value="Quit" url="http://www.primefaces.org"
+					icon="pi pi-times" />
+
+				<f:facet name="options">
+					<p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search" />
+					<c:choose>
+						<c:when test="#{loginController.isUserConnected()}">
+							<p:commandButton value="se connecter" ajax="false"
+								action="#{loginController.logoutUser()}">
+							</p:commandButton>
+						</c:when>
+						<c:otherwise>
+							<p:commandButton value="se connecter" ajax="false"
+								action="#{loginController.showLogin()}">
+							</p:commandButton>
+						</c:otherwise>
+					</c:choose>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+
+		<ui:debug />
+		<div>
+			<ui:insert name="content">
+				<p>CONTENT</p>
+			</ui:insert>
+			<h:messages />
+		</div>
+
+		<footer class="page-footer">
+			<div class="footer-copyright text-center py-3">
+				<ui:insert name="footer">
+					<span>(c) 2020</span>
+				</ui:insert>
+			</div>
+		</footer>
+	</div>
+</h:body>
+</html>

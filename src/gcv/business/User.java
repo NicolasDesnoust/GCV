@@ -15,6 +15,11 @@ import gcv.beans.Person;
  */
 public interface User {
 	
+	/**
+	 * Retourne la valeur du booléen connected.
+	 * @return vrai si l'utilisateur est connecté, faux sinon.
+	 */
+	public boolean isConnected();
 	
 	/**Permet à un utilisateur de se connecter à son compte.
 	 * 

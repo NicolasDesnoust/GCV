@@ -88,7 +88,8 @@ public class TestDao {
     	
     	assertTrue(persons.size() > 0);
     	for(Person p : persons) {
-    		assertTrue(p.getLastName().contains(toFind));
+    		System.out.println(p.getLastName());
+    		assertTrue(p.getLastName().toUpperCase().contains(toFind));
     	}
     }
     
@@ -109,7 +110,7 @@ public class TestDao {
     	for(Person p : persons) {
     		boolean have = false;
     		for(Activity a : p.getCv()) {
-    			if (a.getTitle().contains("ILD"))
+    			if (a.getTitle().toUpperCase().contains("ILD"))
     				have = true;
         	}
     		assertTrue(have);

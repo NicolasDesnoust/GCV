@@ -21,5 +21,14 @@
     </application>
 
 	 <!-- Règles de navigation ici -->
-	 
+	<navigation-rule>
+	    <display-name>Home</display-name>
+	    <from-view-id>/login.xhtml</from-view-id>
+	    <navigation-case>
+	        <from-outcome>home</from-outcome>
+	        <to-view-id>/showPersons.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+
 </faces-config>
