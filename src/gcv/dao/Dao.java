@@ -1,6 +1,7 @@
 package gcv.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Local;
 
@@ -34,5 +35,10 @@ public interface Dao extends GenericDao {
 	 * @return L'entité trouvée ou null.
 	 */
 	public Person readPersonByMail(String mail);
+
+	List<Person> readAllBetweenWithFilters(int start, int maxResults, String firstName, String lastName,
+			String activityTitle);
+
+	int getRowsCount(String firstName, String lastName, String activityTitle);
 
 }

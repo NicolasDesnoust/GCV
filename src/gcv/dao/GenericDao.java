@@ -91,7 +91,7 @@ public interface GenericDao {
 	 * 
 	 * @param entity L'entité à faire persister.
 	 */
-	public <T>	void createAll(T[] entity);
+	public <T> void createAll(T[] entity);
 
 	public <T> int getRowsCount(Class<T> clazz);
 }

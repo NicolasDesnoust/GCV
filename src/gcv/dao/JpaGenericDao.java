@@ -1,5 +1,6 @@
 package gcv.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
@@ -120,7 +122,11 @@ public class JpaGenericDao implements GenericDao {
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		// clause FROM de la requete
 		Root<T> root = cq.from(clazz);
-	
+
+		// Recuperation du metamodel
+		Metamodel m = em.getMetamodel();
+		EntityType<T> Clazz_ = m.entity(clazz);
+
 		// clause SELECT de la requete
 		cq.select(cb.count(root));
 
@@ -248,7 +254,7 @@ public class JpaGenericDao implements GenericDao {
 
 		return resultList;
 	}
-
+		
 	@Override
 	public <T> List<T> readAllBetween(Class<T> clazz, int start, int maxResults) {
 		// Récupère une instance de la classe CriteriaBuilder
@@ -257,15 +263,20 @@ public class JpaGenericDao implements GenericDao {
 		CriteriaQuery<T> cq = cb.createQuery(clazz);
 		// clause FROM de la requete
 		Root<T> root = cq.from(clazz);
+		
+		// Recuperation du metamodel
+		Metamodel m = em.getMetamodel();
+		EntityType<T> Clazz_ = m.entity(clazz);
+		
 		// clause SELECT de la requete
 		cq.select(root);
-
+				
 		// Preparation de la requete pour execution
 		TypedQuery<T> q = em.createQuery(cq);
 		
 		q.setFirstResult(start);
 		q.setMaxResults(maxResults);
-		System.out.println(start + ": " + maxResults);
+
 		// Execution de la requete
 		List<T> resultList = q.getResultList();
 
