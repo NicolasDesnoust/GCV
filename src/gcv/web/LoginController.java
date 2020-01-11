@@ -1,7 +1,10 @@
 package gcv.web;
 
+import java.util.Locale;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -71,8 +74,20 @@ public class LoginController {
 		
 		return "home";
 	}
-	
+
 	public boolean isUserConnected() {
 		return userManager.isConnected();
+	}
+	
+	public Person getCurrentUser() {
+		String currentLogin;
+		Person currentUser = null;
+
+		if (isUserConnected()) {
+			currentLogin = userManager.getLogin();
+			currentUser = dao.readPersonByMail(currentLogin);
+		}
+		
+		return currentUser;
 	}
 }

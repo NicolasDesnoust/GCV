@@ -9,3 +9,60 @@ body {
 	color: #dedede;
 	font-family: "Open Sans", "Helvetica Neue", sans-serif;
 }
+
+body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem.ui-menubar-options {
+	margin-right: 0em;
+}
+
+.capitalized {
+	text-transform: lowercase;
+	text-transform: capitalize;
+}
+
+.profile>ul.ui-menu-child {
+	width: 18em !important;
+}
+
+.ui-sidebar-right {
+	width: 25em;
+}
+
+.ui-sidebar-close {
+	margin-top: 1em;
+	margin-right: 1em;
+}
+
+.ui-sidebar>.ui-panel>.ui-panel-content {
+	border: 0px;
+	/*height: 70%*/
+	
+	position: fixed;
+	top: 5em;
+	bottom: 3.5em;
+	overflow-y: scroll;
+	float: none;
+	width: inherit;
+}
+
+.ui-sidebar>.ui-panel>.ui-panel-footer {
+	text-align: center;
+	border: 0px;
+	/*height: 60px;
+	position: absolute;
+	bottom: 0;*/
+	width: 100%;
+	
+	position: fixed; 
+	bottom: 0; 
+	height: 3.5em; 
+}
+
+.ui-sidebar>.ui-panel>.ui-panel-titlebar {
+	/*height: 15%;*/
+	border: 0px;
+	
+	width: 100%;
+	position: fixed; 
+	top: 0; 
+	height: 5em; 
+}

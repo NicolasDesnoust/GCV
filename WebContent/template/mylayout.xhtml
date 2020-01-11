@@ -10,74 +10,57 @@
 	<title><ui:insert name="title">GCV</ui:insert></title>
 	<h:outputStylesheet library="webjars"
 		name="bootstrap/3.3.7/css/bootstrap.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all-jsf.css" />
 	<h:outputScript library="webjars" name="jquery/1.11.1/jquery.js" />
 	<h:outputScript library="webjars"
 		name="bootstrap/3.3.7/js/bootstrap.js" />
+
 </h:head>
 <h:body>
+	<f:view locale="#{languageController.localeCode}" />
 	<h:outputStylesheet library="css" name="appStyle.css" />
 	<div class="container">
-		<h1 style="margin-bottom: 0.5em;">GCV : Gestionnaire de C.V.</h1>
+		<h1 style="font-weight: bold; margin-bottom: 0.5em;">
+			<h:outputText value="#{messages.app_title}" />
+		</h1>
 		<h:form>
 			<p:growl id="messages" />
 
+			<c:set var="user" value="#{loginController.getCurrentUser()}" />
 			<p:menubar>
-				<p:submenu label="File" icon="pi pi-file">
-					<p:submenu label="New" icon="pi pi-briefcase">
-						<p:menuitem value="Project" url="#" />
-						<p:menuitem value="Other" url="#" />
-					</p:submenu>
-					<p:menuitem value="Open" url="#" />
+				<p:menuitem value="Accueil" url="#" icon="fas fa-home" />
+
+				<p:submenu rendered="#{loginController.isUserConnected()}"
+					label="Vous" icon="fas fa-user-circle" class="profile">
+					<p:menuitem url="#">
+						<h:outputText class="capitalized" style="font-weight:bold"
+							value="#{user.firstName} #{user.lastName}" />
+					</p:menuitem>
 					<p:separator />
-					<p:menuitem value="Quit" url="#" />
+					<p:menuitem value="Voir le profil" icon="fas fa-id-card" url="#" />
+					<p:menuitem value="Éditer le profil" icon="fas fa-edit" url="#" />
+					<p:menuitem value="Coopter" icon="fas fa-hands-helping" url="#" />
+					<p:separator />
+					<p:menuitem value="Se déconnecter" icon="fas fa-sign-out-alt"
+						url="#" />
 				</p:submenu>
 
-				<p:submenu label="Edit" icon="pi pi-pencil">
-					<p:menuitem value="Undo" url="#" icon="pi pi-angle-double-left" />
-					<p:menuitem value="Redo" url="#" icon="pi pi-angle-double-right" />
-				</p:submenu>
+				<p:menuitem value="Paramètres" icon="fas fa-user-cog"
+					oncomplete="PF('sidebar').show()" />
 
-				<p:submenu label="Help" icon="pi pi-question">
-					<p:menuitem value="Contents" url="#" />
-					<p:submenu label="Search" icon="pi pi-search">
-						<p:submenu label="Text">
-							<p:menuitem value="Workspace" url="#" />
-						</p:submenu>
-						<p:menuitem value="File" url="#" />
-					</p:submenu>
-				</p:submenu>
-
-				<p:submenu label="Actions" icon="pi pi-cog">
-					<p:submenu label="Ajax" icon="pi pi-refresh">
-						<p:menuitem value="Save" action="#{menuView.save}"
-							icon="pi pi-save" update="messages" />
-						<p:menuitem value="Update" action="#{menuView.update}"
-							icon="pi pi-refresh" update="messages" />
-					</p:submenu>
-					<p:submenu label="Non-Ajax" icon="pi pi-clone">
-						<p:menuitem value="Delete" action="#{menuView.delete}"
-							icon="pi pi-times" update="messages" ajax="false" />
-					</p:submenu>
-				</p:submenu>
-
-				<p:menuitem value="Quit" url="http://www.primefaces.org"
-					icon="pi pi-times" />
+				<p:menuitem value="À propos" url="#" icon="fas fa-question-circle" />
 
 				<f:facet name="options" id="op">
-					<p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search" />
-					<c:choose>
-						<c:when test="#{loginController.isUserConnected()}">
-							<p:commandButton value="se déconnecter"
-								action="#{loginController.logoutUser()}">
-								<f:ajax execute="@this" render="@op" />
-							</p:commandButton>
-						</c:when>
-						<c:otherwise>
-							<p:commandButton value="se connecter"
-								action="#{loginController.showLogin()}">
-							</p:commandButton>
-						</c:otherwise>
-					</c:choose>
+					<p:commandButton rendered="#{loginController.isUserConnected()}"
+						value="&#160; se déconnecter" icon="pi pi-sign-out"
+						style="width:100%" action="#{loginController.logoutUser()}">
+					</p:commandButton>
+					<p:commandButton
+						rendered="#{loginController.isUserConnected() == false}"
+						value="&#160; se connecter" icon="fas fa-sign-in-alt"
+						style="width:100%" action="#{loginController.showLogin()}">
+					</p:commandButton>
 				</f:facet>
 			</p:menubar>
 		</h:form>
@@ -98,5 +81,77 @@
 			</div>
 		</footer>
 	</div>
+	<h:form>
+		<p:sidebar style="padding:0em;" widgetVar="sidebar" position="right"
+			baseZIndex="10000" blockScroll="true">
+
+			<p:panel style="width:100%;height:100%;margin: 0px !important!"
+				styleClass="ui-noborder;ui-panelgrid-blank">
+				<f:facet name="header">
+					<h3 style="font-weight: bold">Paramètres</h3>
+				</f:facet>
+
+				<h4 style="margin-top: 1em">Langue</h4>
+
+				<p:selectOneRadio id="localeRadio"
+					value="#{languageController.localeCode}" layout="responsive"
+					columns="2">
+					<f:selectItems value="#{languageController.countriesInMap.entrySet()}" var="locale" 
+    					itemValue="#{locale.value}" itemLabel="#{locale.key}"/>
+				</p:selectOneRadio>
+				<h:outputText style="margin-top:1em"
+					value="Pas d'activités enregistrées Pas d'activités enregistrées 
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistréesPas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées
+Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées Pas d'activités enregistrées" />
+				
+				<f:facet name="footer">
+					<div class="ui-inputgroup"
+						style="display: inline-block; width: 100%;margin-bottom:0.5em">
+						<p:commandButton value="&#160; Retour"
+							style="color: #fff;
+							background-color: #d9534f;border-color: #d43f3a;width:49%"
+							icon="fas fa-arrow-left" oncomplete="PF('sidebar').hide()" />
+						<p:commandButton style="margin-left:0.22em;width:49%"
+							value="&#160; Appliquer" icon="fas fa-check"
+							oncomplete="PF('sidebar').hide()"
+							action="#{languageController.changeCountryLocaleCode}"
+							ajax="false" />
+					</div>
+				</f:facet>
+			</p:panel>
+
+
+		</p:sidebar>
+	</h:form>
 </h:body>
 </html>
