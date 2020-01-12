@@ -82,7 +82,7 @@ public interface GenericDao {
 	 * @param propertyValue La valeur de la propriété (critère de recherche).
 	 * @return La collection d'entités correspondant aux critères de recherche.
 	 */
-	public <T> Collection<T> findByStringProperty(Class<T> clazz, String propertyName, String propertyValue);
+	public <T> Collection<T> findByStringProperty(Class<T> clazz, String propertyName, String propertyValue, int limit);
 
 	/**
 	 * Méthode générique de création d'entités dans une base de données.

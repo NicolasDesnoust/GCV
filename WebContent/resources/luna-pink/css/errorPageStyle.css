@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+.error-title {
+	color:#e02365;
+	font-weight:bold;
+	margin:0;
+}
+
+.error-page {
+	margin-top: 3%;
+}
+
+.error-page .ui-panelgrid {
+	width:100%;
+	text-align:center;
+}
+
+.error-page img {
+	width:100%;
+}
+
+.error-page .ui-inputgroup {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+}
+
+.error-page .ui-panel {
+	width:100%;
+	text-align:center;
+	margin-top:1em;
+}
+
+.error-page .left-button {
+	width:49%;
+}
+
+.error-page .right-button {
+	margin-left:0.22em;
+	width:49%
+}
+
+.error-page .ui-widget {
+	font-size: large !important;
+}
+
+.error-page .ui-panelgrid .ui-panelgrid-cell {
+	padding:0;
+	padding-top:0.2em;
+	padding-bottom:0.2em;
+}

@@ -224,7 +224,7 @@ public class JpaGenericDao implements GenericDao {
 	 * @return La collection d'entités correspondant aux critères de recherche.
 	 */
 	@Override
-	public <T> Collection<T> findByStringProperty(Class<T> clazz, String propertyName, String propertyValue) {
+	public <T> Collection<T> findByStringProperty(Class<T> clazz, String propertyName, String propertyValue, int limit) {
 		// Récupère une instance de la classe CriteriaBuilder
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		// Definition d'un nouveau type de requete
@@ -244,6 +244,9 @@ public class JpaGenericDao implements GenericDao {
 
 		// Preparation de la requete pour execution
 		TypedQuery<T> q = em.createQuery(cq);
+		if (limit != -1) {
+			q.setMaxResults(limit);
+		}
 		// Execution de la requete
 		List<T> resultList = q.getResultList();
 

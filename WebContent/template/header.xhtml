@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title><ui:insert name="title">
+				<h:outputText value="#{messages['app.title.min']}" />
+			</ui:insert></title>
+		<h:outputStylesheet library="webjars"
+			name="bootstrap/3.3.7/css/bootstrap.min-jsf.css" />
+		<h:outputStylesheet library="webjars"
+			name="font-awesome/5.12.0/css/all-jsf.css" />
+
+		<h:outputScript library="webjars"
+			name="bootstrap/3.3.7/js/bootstrap.js" />
+		<h:outputStylesheet library="#{themeController.librairy}" name="css/appStyle.css" />
+		<h:outputStylesheet library="#{themeController.librairy}" name="css/sidebarStyle.css" />
+		<h:outputStylesheet library="#{themeController.librairy}" name="css/navbarStyle.css" />
+		<h:outputStylesheet library="#{themeController.librairy}" name="css/errorPageStyle.css" />
+		<h:outputStylesheet library="#{themeController.librairy}" name="css/loginStyle.css" />
+		<h:outputStylesheet library="#{themeController.librairy}" name="css/showPersonsStyle.css" />
+	</h:head>
+</ui:composition>

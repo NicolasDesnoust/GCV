@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<c:set var="user" value="#{loginController.getCurrentUser()}" />
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Accueil" url="#" icon="fas fa-home" />
+
+			<p:submenu rendered="#{loginController.isUserConnected()}"
+				label="Vous" icon="fas fa-user-circle" class="profile">
+				<p:menuitem url="#">
+					<h:outputText class="user-name"
+						value="#{user.firstName} #{user.lastName}" />
+				</p:menuitem>
+				<p:separator />
+				<p:menuitem value="Voir le profil" icon="fas fa-id-card" url="#" />
+				<p:menuitem value="Éditer le profil" icon="fas fa-edit" url="#" />
+				<p:menuitem value="Coopter" icon="fas fa-hands-helping" url="#" />
+				<p:separator />
+				<p:menuitem value="Se déconnecter" icon="fas fa-sign-out-alt"
+					url="#" />
+			</p:submenu>
+
+			<p:menuitem value="Paramètres" icon="fas fa-user-cog"
+				action="#{parametersController.initParameters}"
+				oncomplete="PF('sidebar').show()" />
+
+			<p:menuitem value="À propos" url="#" icon="fas fa-question-circle" />
+
+			<f:facet name="options" id="op">
+				<p:commandButton rendered="#{loginController.isUserConnected()}"
+					value="&#160; se déconnecter" icon="pi pi-sign-out"
+					styleClass="navbar-left-button"
+					action="#{loginController.logoutUser()}">
+				</p:commandButton>
+				<p:commandButton
+					rendered="#{loginController.isUserConnected() == false}"
+					value="&#160; se connecter" icon="fas fa-sign-in-alt"
+					styleClass="navbar-right-button"
+					action="#{loginController.showLogin()}">
+				</p:commandButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+</ui:composition>

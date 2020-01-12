@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.value {
+	font-weight: bold;
+}
+
+body {
+	background-color: #323232;
+	color: #dedede;
+	font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.capitalized {
+	text-transform: lowercase;
+	text-transform: capitalize;
+}
+
+.app-title {
+	 font-weight: bold;
+	 margin-bottom: 0.5em;
+}

@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:insert name="header" >
+<ui:include src="/template/errorPage.xhtml">
+
+	<ui:param name="errorTitle" value="SESSION EXPIRÉE" />
+	<ui:param name="errorContent" value="Votre session a expiré en raison d'une inactivité." />
+	<ui:param name="errorImage" value="images/errorLogo.png" />
+	<ui:param name="errorAlt" value="Error expired Logo" />
+ 
+</ui:include>
+</ui:insert>
+</html>

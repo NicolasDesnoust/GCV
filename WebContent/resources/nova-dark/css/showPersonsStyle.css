@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+body .ui-autocomplete-input {
+	width:100%;
+}
+
+body .ui-autocomplete {
+	width:100%;
+}

@@ -214,7 +214,7 @@ public class UserBean implements User {
 	 */
 	@Override
 	public Collection<Person> findAllPersonsByFirstName(String input) {
-		return dao.findByStringProperty(Person.class, "firstName", "%" + input + "%");
+		return dao.findByStringProperty(Person.class, "firstName", "%" + input + "%", -1);
 	}
 
 	/**Recherche un ensemble de personnes dans une base de données en fonction de leur nom de famille.
@@ -226,7 +226,7 @@ public class UserBean implements User {
 	 */
 	@Override
 	public Collection<Person> findAllPersonsByLastName(String input) {
-		return dao.findByStringProperty(Person.class, "lastName", "%" + input + "%");
+		return dao.findByStringProperty(Person.class, "lastName", "%" + input + "%", -1);
 	}
 
 	/**Recherche un ensemble de personnes dans une base de données en fonction de leurs activités.

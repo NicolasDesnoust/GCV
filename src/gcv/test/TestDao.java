@@ -84,7 +84,7 @@ public class TestDao {
     	
     	dao.create(person);
     	Collection<Person> persons = 
-    			dao.findByStringProperty(Person.class, "lastName", "%" + toFind + "%");
+    			dao.findByStringProperty(Person.class, "lastName", "%" + toFind + "%", -1);
     	
     	assertTrue(persons.size() > 0);
     	for(Person p : persons) {

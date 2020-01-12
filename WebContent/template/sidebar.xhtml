@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<p:sidebar class="sidebar" widgetVar="sidebar" position="right"
+			baseZIndex="10000" blockScroll="true">
+
+			<p:panel styleClass="ui-noborder;ui-panelgrid-blank">
+				<f:facet name="header">
+					<h3 class="sidebar-title">Paramètres</h3>
+				</f:facet>
+
+
+				<h4 class="sidebar-subtitle">Langue</h4>
+
+				<p:selectOneRadio id="localeRadio"
+					value="#{languageController.localeCode}" layout="responsive"
+					columns="2">
+					<f:selectItems
+						value="#{languageController.countriesInMap.entrySet()}"
+						var="locale" itemValue="#{locale.value}" itemLabel="#{locale.key}" />
+				</p:selectOneRadio>
+
+				<p:separator styleClass="sidebar-separator" />
+
+				<h4 class="sidebar-subtitle">Thème</h4>
+				<p:selectOneRadio id="themeRadio"
+					value="#{themeController.currentTheme}" layout="responsive"
+					columns="2">
+					<f:selectItems value="#{themeController.themes}" />
+				</p:selectOneRadio>
+
+
+
+				<f:facet name="footer">
+					<div class="sidebar-inputgroup ui-inputgroup">
+						<p:commandButton value="&#160; Retour"
+							styleClass="sidebar-button-left" icon="fas fa-arrow-left"
+							oncomplete="PF('sidebar').hide()" />
+						<p:commandButton styleClass="sidebar-button-right"
+							value="&#160; Appliquer" icon="fas fa-check"
+							oncomplete="PF('sidebar').hide()"
+							action="#{parametersController.applyChanges}">
+						</p:commandButton>
+					</div>
+				</f:facet>
+			</p:panel>
+
+
+		</p:sidebar>
+	</h:form>
+</ui:composition>

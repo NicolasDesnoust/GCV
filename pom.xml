@@ -106,6 +106,12 @@
 			<artifactId>font-awesome</artifactId>
 			<version>5.12.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.omnifaces/omnifaces -->
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>2.7.3</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/simpleLayout.xhtml">
+	<ui:define name="simple-content">
+
+		<h:form id="form">
+			<div class="container error-page">
+				<div class="row ">
+					<div class="col-md-6 col-md-offset-3">
+
+						<p:panelGrid styleClass="ui-noborder" columns="1">
+							<p:graphicImage library="#{themeController.librairy}"
+								name="#{errorImage}" alt="#{errorAlt}" />
+							<h2 class="error-title">#{errorTitle}</h2>
+
+							<h:outputText value="#{errorContent}" />
+
+							<p:panel>
+								<div class="ui-inputgroup">
+									<p:commandButton styleClass="left-button"
+										icon="fas fa-arrow-left" value="Accueil" />
+									<p:commandButton styleClass="right-button"
+										icon="fas fa-arrow-right" iconPos="right" value="Connexion" />
+								</div>
+							</p:panel>
+						</p:panelGrid>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

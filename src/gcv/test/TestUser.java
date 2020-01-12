@@ -74,7 +74,7 @@ public class TestUser {
     	String toFind = "cola";
  
     	// GIVEN
-        Mockito.when(dao.findByStringProperty(Person.class, "firstName", "%" + toFind + "%"))
+        Mockito.when(dao.findByStringProperty(Person.class, "firstName", "%" + toFind + "%", -1))
         	.thenReturn(expected);
 
         // WHEN 
@@ -91,7 +91,7 @@ public class TestUser {
     	String toFind = "SNOU";
  
     	// GIVEN
-        Mockito.when(dao.findByStringProperty(Person.class, "lastName", "%" + toFind + "%"))
+        Mockito.when(dao.findByStringProperty(Person.class, "lastName", "%" + toFind + "%", -1))
         	.thenReturn(expected);
 
         // WHEN 

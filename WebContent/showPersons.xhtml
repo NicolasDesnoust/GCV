@@ -5,9 +5,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template/mylayout.xhtml">
+<ui:composition template="/template/complexLayout.xhtml">
 	<ui:define name="content">
-		<h4 style="margin-top: 2em;font-weight: bold">Appliquer des filtres</h4>
+		<h4 style="margin-top: 2em; font-weight: bold">Appliquer des
+			filtres</h4>
 		<h:form id="form">
 			<p:panelGrid id="filtersGrid" style="width:100%">
 				<f:facet name="header">
@@ -21,37 +22,43 @@
 					<p:column>
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
-							<p:inputText placeholder="Entrez un nom" style="width:80%"
-								id="input1" value="#{personController.lastName}" />
+							<p:autoComplete placeholder="Entrez un nom" id="input1"
+								minQueryLength="3" value="#{personController.lastName}"
+								completeMethod="#{autoCompleteController.completeLastName}" />
+
 						</div>
 					</p:column>
 					<p:column>
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
-
-							<p:inputText placeholder="Entrez un prénom" style="width:80%"
-								id="input2" value="#{personController.firstName}" />
+							<p:autoComplete placeholder="Entrez un prénom" id="input2"
+								minQueryLength="3" value="#{personController.firstName}"
+								completeMethod="#{autoCompleteController.completeFirstName}" />
 						</div>
 					</p:column>
 					<p:column>
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon"><i class="fas fa-briefcase"></i></span>
-							<p:inputText placeholder="Entrez un titre d'activité"
-								style="width:80%" id="input3" icon="pi pi-search"
-								value="#{personController.activityTitle}" />
+							<span class="ui-inputgroup-addon"><i
+								class="fas fa-briefcase"></i></span>
+							<p:autoComplete placeholder="Entrez un titre d'activité"
+								minQueryLength="3" id="input3"
+								value="#{personController.activityTitle}"
+								completeMethod="#{autoCompleteController.completeActivitiesTitles}" />
 						</div>
 					</p:column>
 					<p:column>
-						<p:commandButton style="width:100%" value="Appliquer" onclick="#{personController.applyFilters()}"
-							id="withIcon" icon="fas fa-check">
-							 <f:ajax execute="filtersGrid" render="@form"/>	
+						<p:commandButton style="width:100%" value="Appliquer"
+							onclick="#{personController.applyFilters()}" id="withIcon"
+							icon="fas fa-check">
+							<f:ajax execute="filtersGrid" render="@form" />
 						</p:commandButton>
 					</p:column>
 				</p:row>
 			</p:panelGrid>
 
 
-			<h4 style="margin-top: 2em;font-weight: bold">Liste des personnes enregistrées</h4>
+			<h4 style="margin-top: 2em; font-weight: bold">Liste des
+				personnes enregistrées</h4>
 
 			<p:dataGrid style="margin-bottom:2.5em;" var="person"
 				value="#{personController.getLazyModel()}" columns="3" layout="grid"

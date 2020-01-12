@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.login-container {
+	margin-top: 10%;
+}
+
+.login-container table {
+	width:100%;
+}
+
+.login-container .ui-inputfield {
+	width:100%;
+}
+
+.login-container .login-button {
+	width:100%;
+	margin-top:10%;
+	margin-bottom:5%
+}
+

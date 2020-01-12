@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+body .ui-menu.ui-menubar>.ui-menu-list>.ui-menuitem.ui-menubar-options {
+	margin-right: 0em;
+}
+
+.profile>ul.ui-menu-child {
+	width: 18em !important;
+}
+
+.user-name {
+	text-transform: lowercase;
+	text-transform: capitalize;
+	font-weight: bold;
+}
+
+.navbar-left-button {
+	width:100%
+}
+
+.navbar-right-button {
+	width:100%
+}

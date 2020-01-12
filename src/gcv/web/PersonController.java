@@ -12,10 +12,13 @@ import javax.ejb.embeddable.EJBContainer;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.component.datagrid.DataGrid;
 import org.primefaces.event.SelectEvent;
@@ -30,7 +33,7 @@ import gcv.util.LazyPersonDataModel;
 import gcv.util.SortActivityByYearDesc;
 
 @ManagedBean(name = "personController")
-@SessionScoped
+@ViewScoped
 public class PersonController {
 
 	@EJB(beanName = "jpadao")
@@ -38,25 +41,6 @@ public class PersonController {
 
 	private Person thePerson = new Person();
 	private String firstName = "", lastName = "", activityTitle = "";
-	
-	public String getLang() {
-		return lang;
-	}
-
-	public void setLang(String lang) {
-		this.lang = lang;
-	}
-
-	public List<String> getLangs() {
-		return langs;
-	}
-
-	public void setLangs(List<String> langs) {
-		this.langs = langs;
-	}
-
-	private String lang; 
-    private List<String> langs;  
 
 	public String getFirstName() {
 		return firstName;
@@ -100,10 +84,6 @@ public class PersonController {
 	public void init() {
 		System.out.println("Create " + this);
 		
-		langs = new ArrayList<String>();
-        langs.add("Français");
-        langs.add("Anglais");
-		
 		lazyModel = new LazyPersonDataModel(dao, firstName, lastName, activityTitle);
 		// personsCount = dao.getRowsCount(Person.class);
 
@@ -116,13 +96,6 @@ public class PersonController {
 		// Nous injectons le test dans le container pour que
 		// l'annotation @EJB soit traitée
 		// EJBContainer.createEJBContainer().getContext().bind("inject", this);
-	}
-
-	public Collection<Person> getPersonsByFirstname(String input) {
-		System.out.println(input);
-		Collection<Person> persons = dao.findByStringProperty(Person.class, "firstName", "%" + "input" + "%");
-
-		return persons;
 	}
 
 	public List<Activity> getLastActivities(Person person, int size) {
@@ -152,8 +125,12 @@ public class PersonController {
 	
 	public void applyFilters() {
 		lazyModel = new LazyPersonDataModel(dao, firstName, lastName, activityTitle);
-		
-		DataGrid dataGrid = (DataGrid)  FacesContext.getCurrentInstance().getViewRoot().findComponent("form:personsGrid");
+		/*FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext ec = context.getExternalContext();
+		final HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		request.getSession(false).setMaxInactiveInterval(30);
+		System.out.printf("Session timeout defined at code level : %s\n", request.getSession(false).getMaxInactiveInterval());
+		*/DataGrid dataGrid = (DataGrid)  FacesContext.getCurrentInstance().getViewRoot().findComponent("form:personsGrid");
 		dataGrid.loadLazyData();
 		dataGrid.setFirst(0);
 	}

@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/simpleLayout.xhtml">
+	<ui:define name="simple-content">
+		<p:growl id="messages" />
+
+		<h1 class="app-title">
+			<h:outputText value="#{messages['app.title']}" />
+		</h1>
+
+		<ui:include src="/template/navbar.xhtml" />
+
+		<ui:debug />
+		<div>
+			<ui:insert name="content">
+				<p>CONTENT</p>
+			</ui:insert>
+			<h:messages />
+		</div>
+		
+		<ui:include src="/template/footer.xhtml" />
+		<ui:include src="/template/sidebar.xhtml" />
+	</ui:define>
+</ui:composition>
+</html>
