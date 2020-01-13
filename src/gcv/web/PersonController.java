@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.component.datagrid.DataGrid;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TabChangeEvent;
+import org.primefaces.event.TabCloseEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -33,14 +35,22 @@ import gcv.util.LazyPersonDataModel;
 import gcv.util.SortActivityByYearDesc;
 
 @ManagedBean(name = "personController")
-@ViewScoped
+@SessionScoped
 public class PersonController {
 
 	@EJB(beanName = "jpadao")
 	private Dao dao;
 
-	private Person thePerson = new Person();
+	private Person selectedPerson = null;
 	private String firstName = "", lastName = "", activityTitle = "";
+	
+	public Person getSelectedPerson() {
+		return selectedPerson;
+	}
+
+	public void setSelectedPerson(Person selectedPerson) {
+		this.selectedPerson = selectedPerson;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -66,14 +76,6 @@ public class PersonController {
 		this.activityTitle = activityTitle;
 	}
 
-	public void setThePerson(Person thePerson) {
-		this.thePerson = thePerson;
-	}
-
-	public Person getThePerson() {
-		return thePerson;
-	}
-
 	private LazyDataModel<Person> lazyModel;
 
 	public LazyDataModel<Person> getLazyModel() {
@@ -85,42 +87,6 @@ public class PersonController {
 		System.out.println("Create " + this);
 		
 		lazyModel = new LazyPersonDataModel(dao, firstName, lastName, activityTitle);
-		// personsCount = dao.getRowsCount(Person.class);
-
-		/*
-		 * persons = dao.readAll(Person.class);
-		 * 
-		 * System.out.println("Persons:"); for (Person p : persons) {
-		 * System.out.println(p); }
-		 */
-		// Nous injectons le test dans le container pour que
-		// l'annotation @EJB soit traitée
-		// EJBContainer.createEJBContainer().getContext().bind("inject", this);
-	}
-
-	public List<Activity> getLastActivities(Person person, int size) {
-		ArrayList<Activity> cv;
-
-		cv = new ArrayList<Activity>(person.getCv());
-		Collections.sort(cv, new SortActivityByYearDesc());
-
-		if (cv.size() < size) {
-			return cv;
-		}
-
-		return cv.subList(0, size - 1);
-	}
-
-	public int getActivitiesCount(Person person) {
-		if (person == null) {
-			System.out.println("personne null");
-			return 0;
-		}
-		if (person.getCv() == null) {
-			System.out.println("cv null");
-			return 0;
-		}
-		return person.getCv().size();
 	}
 	
 	public void applyFilters() {
@@ -134,20 +100,38 @@ public class PersonController {
 		dataGrid.loadLazyData();
 		dataGrid.setFirst(0);
 	}
+	
 
+	/**
+	 * Methode showPersons : Fonction d'affichage de tous les personnes
+	 * 
+	 * @return la page showPersons.
+	 */
 	public String showPersons() {
 		System.out.println("Redirecting to showPersons page...");
 		return "showPersons";
 	}
 
+	/**
+	 * Methode showPerson : Fonction d'affichage d'une personne et ses activités
+	 * 
+	 * @param person
+	 * @return la page showPerson.
+	 */
 	public String showPerson(Person person) {
-		thePerson = person;
+		selectedPerson = person;
 
 		System.out.println("Redirecting to showPerson page...");
 		return "showPerson";
 	}
-	/*
-	 * public String newCourse() { theCourse = new Course(); return
-	 * "editCourse?faces-redirect=true"; }
+
+	/**
+	 * Methode editPerson : Fonction de modification des informations d'une personne
+	 * 
+	 * @return la page showPerson.
 	 */
+	public String editPerson() {
+		dao.update(Person.class);
+		return "showPerson";
+	}
 }

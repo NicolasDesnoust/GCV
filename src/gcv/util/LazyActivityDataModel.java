@@ -25,28 +25,25 @@ import gcv.beans.Activity;
 import gcv.beans.Person;
 import gcv.dao.Dao;
 
-public class LazyPersonDataModel extends LazyDataModel<Person> {
+public class LazyActivityDataModel extends LazyDataModel<Activity> {
 
 	private Dao dao;
 	
 	private static final long serialVersionUID = 1L;
-	private String firstName, lastName, activityTitle;
 
-	public LazyPersonDataModel(Dao dao, String firstName, String lastName, String activityTitle) {
+	public LazyActivityDataModel(Dao dao) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.activityTitle = activityTitle;
 		this.dao = dao;
 	}
 
 	@Override
-	public List<Person> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+	public List<Activity> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
-
-		List<Person> persons = dao.readAllBetweenWithFilters(first, pageSize, firstName, lastName, activityTitle);
-		setRowCount(dao.getRowsCount(firstName, lastName, activityTitle));
 		
-		return persons;
+		List<Activity> activities = dao.readAllBetween(Activity.class, first, pageSize);
+		
+		setRowCount(dao.getRowsCount(Activity.class));
+		
+		return activities;
 	}
 }

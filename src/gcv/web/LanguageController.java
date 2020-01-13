@@ -30,7 +30,7 @@ public class LanguageController implements Serializable {
 
 	@Inject
 	@Cookie
-	private String localeCode =  FacesContext.getCurrentInstance().getExternalContext().getRequestLocale().toString();
+	private String localeCode = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale().toString();
 
 	private static Map<String, Object> countries;
 

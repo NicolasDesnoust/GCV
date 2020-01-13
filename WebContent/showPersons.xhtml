@@ -78,13 +78,13 @@
 						
  -->
 						<h:outputText value="Pas d'activités enregistrées"
-							rendered="#{personController.getActivitiesCount(person) == 0}" />
+							rendered="#{activityController.getActivitiesCount(person) == 0}" />
 						<h:outputText value="Dernières activités"
-							rendered="#{personController.getActivitiesCount(person) > 0}" />
+							rendered="#{activityController.getActivitiesCount(person) > 0}" />
 
 						<p:accordionPanel style="margin-top:0.5em;" dynamic="true"
 							cache="true" activeIndex="false"
-							value="#{personController.getLastActivities(person, 4)}"
+							value="#{activityController.getLastActivities(person, 4)}"
 							var="activity">
 							<p:tab title="#{activity.title}" icon="fa fa-folder-open">
 								<h:panelGrid columns="1" cellpadding="10">
@@ -98,7 +98,7 @@
 							<h:outputText styleClass="pi pi-search"
 								style="margin:0 auto;margin-top:0.5em;" />
 							<f:setPropertyActionListener value="#{person}"
-								target="#{personController.thePerson}" />
+								target="#{personController.selectedPerson}" />
 						</p:commandLink>
 					</h:panelGrid>
 				</p:panel>
