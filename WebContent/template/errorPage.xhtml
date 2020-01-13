@@ -22,9 +22,9 @@
 
 							<p:panel>
 								<div class="ui-inputgroup">
-									<p:commandButton styleClass="left-button"
-										icon="fas fa-arrow-left" value="Accueil" />
-									<p:commandButton styleClass="right-button"
+									<p:commandButton styleClass="left-button" ajax="false" action="#{personController.showPersons()}"
+										icon="fas fa-arrow-left" value="Accueil"/>
+									<p:commandButton styleClass="right-button" ajax="false" action="#{loginController.showLogin()}"
 										icon="fas fa-arrow-right" iconPos="right" value="Connexion" />
 								</div>
 							</p:panel>

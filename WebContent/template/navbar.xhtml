@@ -7,7 +7,8 @@
 	<c:set var="user" value="#{loginController.getCurrentUser()}" />
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Accueil" url="#" icon="fas fa-home" />
+			<p:menuitem value="Accueil" action="#{personController.showPersons()}"
+				icon="fas fa-home" />
 
 			<p:submenu rendered="#{loginController.isUserConnected()}"
 				label="Vous" icon="fas fa-user-circle" class="profile">
@@ -16,19 +17,24 @@
 						value="#{user.firstName} #{user.lastName}" />
 				</p:menuitem>
 				<p:separator />
-				<p:menuitem value="Voir le profil" icon="fas fa-id-card" url="#" />
-				<p:menuitem value="Éditer le profil" icon="fas fa-edit" url="#" />
+				<p:menuitem value="Voir le profil" icon="fas fa-id-card"
+					action="#{personController.showPerson(loginController.getCurrentUser())}"
+					ajax="false" />
+				<p:menuitem value="Éditer le profil" icon="fas fa-edit"
+					action="#{personController.showEditPerson(loginController.getCurrentUser())}"
+					ajax="false" />
 				<p:menuitem value="Coopter" icon="fas fa-hands-helping" url="#" />
 				<p:separator />
 				<p:menuitem value="Se déconnecter" icon="fas fa-sign-out-alt"
-					url="#" />
+					action="#{loginController.logoutUser()}" ajax="false" />
 			</p:submenu>
 
 			<p:menuitem value="Paramètres" icon="fas fa-user-cog"
 				action="#{parametersController.initParameters}"
 				oncomplete="PF('sidebar').show()" />
 
-			<p:menuitem value="À propos" url="#" icon="fas fa-question-circle" />
+			<p:menuitem value="À propos" url="/GCV/showAbout.xhtml"
+				icon="fas fa-question-circle" />
 
 			<f:facet name="options" id="op">
 				<p:commandButton rendered="#{loginController.isUserConnected()}"

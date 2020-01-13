@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+.edit-page .left-button {
+	width:49%;
+}
+
+.edit-page .right-button {
+	margin-left:0.22em;
+	width:49%
+}
+
+.edit-page .ui-inputgroup {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+}
+
+.edit-page .ui-inputfield {
+	width: 100%;
+}
+
+body .edit-page .ui-message-error {
+	width:100%;
+	background-color:#FF1F41;
+	color:#dedede;
+}
+body .edit-page .ui-message.ui-message-error .ui-message-error-icon {
+	color:#dedede;
+}
+
+body .edit-page .ui-messages-error {
+	background-color:#FF1F41;
+	color:#dedede;
+}
+body .edit-page .ui-messages .ui-messages-error .ui-messages-error-icon {
+	color:#dedede;
+}

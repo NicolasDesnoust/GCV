@@ -202,9 +202,9 @@ public class JpaGenericDao implements GenericDao {
 	public <T> void remove(Class<T> clazz, Object id) {
 		T entity = em.find(clazz, id);
 		if (entity != null) {
+			System.err.println("Entity removed.");
 			em.remove(entity);
 		}
-		System.err.println("Entity removed.");
 	}
 
 	/**

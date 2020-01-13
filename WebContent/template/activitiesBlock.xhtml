@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<p:panel style="margin-top:2em">
+			<f:facet name="header">
+				<i style="text-align: center;" class="fas fa-user-alt"></i> #{blockTitle}
+					<div style="float: right">
+					<p:commandButton
+						rendered="#{loginController.isCurrentUser(personController.selectedPerson)}"
+						action="#{activityController.showCreateActivity()}" ajax="false"
+						styleClass="btn btn-info" icon="pi pi-plus-circle" value="Ajouter" />
+				</div>
+			</f:facet>
+			<div class="ui-g">
+				<h:outputText
+					rendered="#{activityController.getActivitiesCount(activityController.getActivities(), blockNature) == 0}"
+					value="#{blockInfo}" />
+				<p:repeat value="#{activityController.getActivities()}" var="ac">
+
+					<div class="ui-g-12">
+						<p:panel rendered="#{ac.nature == blockNature}">
+							<f:facet name="header">
+								<i class="fas fa-user-alt"></i> #{ac.title}
+									<div style="float: right">
+									<div class="ui-inputgroup">
+										<p:commandButton style="margin-right:0.22em"
+											action="#{activityController.showEditActivity(ac)}"
+											styleClass="btn btn-info" icon="pi pi-pencil"
+											value="Modifier"
+											rendered="#{loginController.isCurrentUser(personController.selectedPerson)}"
+											ajax="false" />
+										<p:commandButton
+											rendered="#{loginController.isCurrentUser(personController.selectedPerson)}"
+											action="#{activityController.deleteActivity(ac)}"
+											styleClass="btn btn-info" icon="pi pi-minus-circle"
+											value="Supprimer">
+											<f:ajax execute="@this" render="@form" />
+										</p:commandButton>
+									</div>
+								</div>
+							</f:facet>
+							<div class="ui-g">
+
+								<div class="ui-g-4">
+									<div class="ui-g-12" style="padding-bottom: 0">
+										<h:outputLabel for="year" value="ANNÉE" />
+									</div>
+									<div class="ui-g-12" style="padding-top: 0">
+										<h:outputText id="year" value="#{ac.year}" />
+									</div>
+									<div class="ui-g-12" style="padding-bottom: 0">
+										<h:outputLabel for="webAddress" value="ADRESSE WEB" />
+									</div>
+									<div class="ui-g-12" style="padding-top: 0">
+										<h:outputText id="webAddress" value="#{ac.webAddress}" />
+									</div>
+
+								</div>
+								<div class="ui-g-8">
+									<div class="ui-g-12" style="padding-bottom: 0">
+										<h:outputLabel for="desc" value="DESCRIPTION" />
+									</div>
+									<div class="ui-g-12"
+										style="padding-top: 0; height: 80px; overflow: auto;">
+										<h:outputText id="desc" value="#{ac.description}" />
+									</div>
+								</div>
+
+							</div>
+						</p:panel>
+					</div>
+				</p:repeat>
+			</div>
+		</p:panel>
+	</h:form>
+</ui:composition>

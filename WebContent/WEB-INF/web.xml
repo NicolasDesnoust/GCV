@@ -50,6 +50,10 @@
 	</servlet-mapping>
 
 	<error-page>
+		<error-code>401</error-code>
+		<location>/errorpages/401.xhtml</location>
+	</error-page>
+	<error-page>
 		<error-code>404</error-code>
 		<location>/errorpages/404.xhtml</location>
 	</error-page>

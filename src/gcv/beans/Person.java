@@ -67,16 +67,16 @@ public class Person implements Serializable {
 	private String mail;
 
 	/**Site web d'une personne.
-	 * Il est obligatoire.
+	 * Il n'est pas obligatoire.
 	 */
-	@Basic(optional = false)
-	@Column(name = "web_site", length = 255, nullable = false)
+	@Column(name = "web_site", length = 255)
 	private String webSite;
 
 	/**Date de naissance d'une personne.
 	 * Elle est obligatoire.
 	 */
 	@Temporal(TemporalType.DATE)
+	@Basic(optional = false)
 	@Column(name = "birth_date")
 	//TODO : trouver un équivalent pour l'annotation suivante, pas de spring ici.
 	// @DateTimeFormat(pattern = "dd/MM/yyyy")

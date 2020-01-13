@@ -1,9 +1,11 @@
 package gcv.web;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +38,16 @@ import gcv.util.LazyPersonDataModel;
 import gcv.util.SortActivityByYearDesc;
 
 @ManagedBean(name = "activityController")
-@ViewScoped
-public class ActivityController {
+@SessionScoped
+public class ActivityController implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@EJB(beanName = "jpadao")
 	private Dao dao;
 
-	private Activity selectedActivity;
-	
+	private Activity selectedActivity = new Activity();
+
 	public Activity getSelectedActivity() {
 		return selectedActivity;
 	}
@@ -55,10 +59,10 @@ public class ActivityController {
 	private LazyDataModel<Activity> lazyModel;
 
 	private Collection<Activity> activities;
-	
-	@ManagedProperty(value="#{personController}")
+
+	@ManagedProperty(value = "#{personController}")
 	private PersonController personController;
-	
+
 	public void setPersonController(PersonController personController) {
 		this.personController = personController;
 	}
@@ -72,13 +76,14 @@ public class ActivityController {
 		System.out.println("Create " + this);
 
 		lazyModel = new LazyActivityDataModel(dao);
-	
+
 		Person selectedPerson = personController.getSelectedPerson();
-		
+
 		if (selectedPerson != null) {
-			activities = selectedPerson.getCv(); 
+			activities = selectedPerson.getCv();
+		} else {
+			activities = new ArrayList<Activity>();
 		}
-		activities = new ArrayList<Activity>(); 
 	}
 
 	public List<Activity> getLastActivities(Person person, int size) {
@@ -103,9 +108,28 @@ public class ActivityController {
 			System.out.println("cv null");
 			return 0;
 		}
-		System.out.println(person.getCv().size()+" activities");
+		System.out.println(person.getCv().size() + " activities");
 		return person.getCv().size();
 	}
+	
+	public int getActivitiesCount(Collection<Activity> activities, String nature) {
+		int compt = 0;
+		System.out.println(nature);
+		
+		if (activities == null)
+			return 0;
+		
+		Iterator<Activity> it = activities.iterator();
+		
+		while(it.hasNext()) {
+			if (it.next().getNature().toString().equals(nature)) {
+				compt++;
+			}
+		}
+
+		return compt;
+	}
+
 
 	public void applyFilters() {
 		lazyModel = new LazyActivityDataModel(dao);
@@ -115,30 +139,6 @@ public class ActivityController {
 		// dataGrid.loadLazyData();
 		// dataGrid.setFirst(0);
 	}
-
-	/**
-	 * Methode showActivity : Fonction d'affichage d'une personne et ses activités
-	 * 
-	 * @param person
-	 * @return la page showActivity.
-	 */
-	public String showActivity(Person personActivity) {
-
-		System.out.println("Redirecting to showActivity page...");
-		return "showActivity";
-	}
-	
-	/**
-	 * Methode showActivities : Fonction d'affichage de tous les personnes
-	 * 
-	 * @return la page showActivities
-	 */
-	public String showActivities() {
-		System.out.println("Redirecting to showActivities page...");
-		return "showActivities";
-	}
-
-
 	/**
 	 * Methode editActivity : Fonction de modification des informations d'une
 	 * activité
@@ -147,7 +147,20 @@ public class ActivityController {
 	 */
 	public String editActivity() {
 		dao.update(Activity.class);
-		return "showActivity";
+		return "show-activity";
+	}
+	
+
+	/**
+	 * Methode showCreateActivity : Fonction dd'accès à la vue de création
+	 * d'activités.
+	 * 
+	 * @return la page createActivity.
+	 */
+	public String showCreateActivity() {
+		selectedActivity = new Activity();
+		
+		return "create-activity";
 	}
 
 	/**
@@ -156,13 +169,55 @@ public class ActivityController {
 	 * 
 	 * @return la page showActivity.
 	 */
-	public String createActivity() {
-		dao.create(Activity.class);
-		return "showActivity";
+	public String createActivity(Activity activity, Person owner) {
+		activity.setOwner(owner);
+		dao.create(activity);
+		
+		
+		
+		return personController.showPerson(owner);
+	}
+	
+	/**
+	 * Methode showEditActivity : Controleur de la page d'édition des informations
+	 * d'une activité.
+	 * 
+	 * @return la page editActivity.
+	 */
+	public String showEditActivity(Activity activity) {
+		selectedActivity = activity;
+		return "edit-activity";
 	}
 
 	public Collection<Activity> getActivities() {
-		return activities;
-	}
+		Person selectedPerson = personController.getSelectedPerson();
 
+		if (selectedPerson != null) {
+			return selectedPerson.getCv();
+		}
+		return new ArrayList<Activity>();
+
+	}
+	
+	/**
+	 * Methode updateActivity : Fonction de modification des informations d'une activity
+	 * 
+	 * @return la page updateActivity.
+	 */
+	public String updateActivity(Activity activity) {
+		dao.update(activity);
+		
+		return personController.showPerson(activity.getOwner());
+	}
+	
+	/**
+	 * Methode deleteActivity : Fonction de suppression d'une activity
+	 * 
+	 */
+	public void deleteActivity(Activity activity) {
+		System.out.println(activity.getActivityID());
+		dao.remove(Activity.class, activity.getActivityID());
+	}
+	
+	
 }

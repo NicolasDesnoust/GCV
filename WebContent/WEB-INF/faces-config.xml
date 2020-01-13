@@ -31,10 +31,84 @@
 	    </navigation-case>
 	</navigation-rule>
 	
+	
+			<navigation-rule>
+	    <display-name>EditPers</display-name>
+	    <from-view-id>/*</from-view-id>
+	    <navigation-case>
+	        <from-outcome>edit-person</from-outcome>
+	        <to-view-id>/user/editPerson.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+				<navigation-rule>
+	    <display-name>EditAct</display-name>
+	    <from-view-id>/*</from-view-id>
+	    <navigation-case>
+	        <from-outcome>edit-activity</from-outcome>
+	        <to-view-id>/user/editActivity.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+				<navigation-rule>
+	    <display-name>CreateAct</display-name>
+	    <from-view-id>/*</from-view-id>
+	    <navigation-case>
+	        <from-outcome>create-activity</from-outcome>
+	        <to-view-id>/user/createActivity.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+					<navigation-rule>
+	    <display-name>Login</display-name>
+	    <from-view-id>/*</from-view-id>
+	    <navigation-case>
+	        <from-outcome>login</from-outcome>
+	        <to-view-id>/login.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+						<navigation-rule>
+	    <display-name>ShowAbout</display-name>
+	    <from-view-id>/*</from-view-id>
+	    <navigation-case>
+	        <from-outcome>show-about</from-outcome>
+	        <to-view-id>/showAbout.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+		<navigation-rule>
+	    <display-name>ShowPerson</display-name>
+	    <from-view-id>/*</from-view-id>
+	    <navigation-case>
+	        <from-outcome>show-person</from-outcome>
+	        <to-view-id>/showPerson.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+			<navigation-rule>
+	    <display-name>ShowPersons</display-name>
+	    <from-view-id>/*</from-view-id>
+	    <navigation-case>
+	        <from-outcome>show-persons</from-outcome>
+	        <to-view-id>/showPersons.xhtml</to-view-id>
+	        <redirect />
+	    </navigation-case>
+	</navigation-rule>
+	
+	
+	
+	
 	<factory>
     	<exception-handler-factory>
         	org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory
     	</exception-handler-factory>
 	</factory>
+	
+	    <managed-bean>
+	<managed-bean-name>localeBean</managed-bean-name>
+	<managed-bean-class>gcv.web.LanguageController</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
 </faces-config>

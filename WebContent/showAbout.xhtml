@@ -1,0 +1,131 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/complexLayout.xhtml">
+	<ui:define name="content">
+
+		<style>
+.ul, li {
+	margin-bottom: 15px;
+	font-size: 21px;
+	font-weight: 200;
+}
+</style>
+
+		<h:form>
+			<div class="jumbotron"
+				style="margin-top: 2em; background-color: #252525">
+				<h4 style="margin-top: 1em; font-weight: bold">Contexte</h4>
+				<p>Ce projet a été développé dans le cadre de la matière
+					d'Architecture des Applications. Cette dernière est enseignée à la
+					faculté des sciences de Saint-Jérôme en Master 2 Informatique
+					Ingénerie du Logiciel et des Données.</p>
+				<p>Le responsable encadrant ce projet est Monsieur Jean-Luc
+					MASSAT, enseignant-chercheur au Département d'Informatique de la
+					Faculté des Sciences site de Luminy, Aix-Marseille Université et
+					membre de l'équipe Combinatoire et Recherche Opérationnelle du
+					Laboratoire d'Informatique et systèmes.</p>
+				<p>L'objectif de ce projet est de prendre en main la réalisation
+					d'applications basées sur des architectures en couches, notamment
+					l'architecture 3-tiers et son utilisation dans la plateforme JEE
+					(Jakarta Enterprise Edition). Les technologies principalement
+					utilisées sont JSF / CDI / EJB / JPA et WS.</p>
+			</div>
+
+			<div class="jumbotron"
+				style="margin-top: 2em; background-color: #252525">
+				<h4 style="margin-top: 1em; font-weight: bold">Auteurs</h4>
+				<p>Le projet est réalisé par deux étudiants en Master, Nicolas
+					DESNOUST et Serigne Bassirou Mbacké LY.</p>
+			</div>
+
+			<div class="jumbotron"
+				style="margin-top: 2em; background-color: #252525">
+				<h4 style="margin-top: 1em; font-weight: bold">Cahier des
+					charges initial</h4>
+				<p>L'objectif du mini projet est simple : gérer à l'aide de la
+					technologie JEE une liste de CVs. Plus précisément,</p>
+
+				<ul>
+					<li>Chaque personne est représentée par un ensemble
+						d'informations : nom, prénom, adresse électronique, site WEB, date
+						de naissance et mot de passe.</li>
+					<li>Chaque personne peut renseigner un curriculum vitae. Pour
+						notre application, un CV est une liste d'activités. Chaque
+						activité est décrite par</li>
+					<li><ul>
+							<li>une année (obligatoire),</li>
+							<li>une nature (expérience professionnelle, formation,
+								projets, autre) (obligatoire),</li>
+							<li>un titre (obligatoire),</li>
+							<li>un texte descriptif (facultatif),</li>
+							<li>une adresse WEB (facultatif),</li>
+							<li>Chaque personne peut créer de nouvelles personnes
+								(cooptation).</li>
+						</ul></li>
+					<li>La liste des personnes et les CV sont librement
+						consultables. La modification implique une phase
+						d'authentification.</li>
+					<li>Le logiciel doit être capable de gérer environ 100,000
+						personnes.</li>
+				</ul>
+			</div>
+
+			<div class="jumbotron"
+				style="margin-top: 2em; background-color: #252525">
+				<h4 style="margin-top: 1em; font-weight: bold">Étape 1 : Couche
+					métier (EJB/JPA/Junit)</h4>
+				<p>Objectifs :</p>
+
+				<ul>
+					<li>Réalisation d'une couche métier (EJB/JPA) accompagnée de
+						ses tests unitaires.</li>
+					<li>Il faut prévoir les actions CRUD
+						(create/read/update/delete) sur les personnes et les activités.</li>
+					<li>Il faut également prévoir les fonctions de recherche d'une
+						personne sur une partie du nom, du prénom ou le titre d'une
+						activité.</li>
+					<li>Il est souhaitable de prévoir un EJB stateful pour
+						représenter un utilisateur (authentifié ou pas).</li>
+					<li>Il est souhaitable de prévoir un EJB stateless pour offrir
+						les fonctions d'accès et de recherche.</li>
+
+				</ul>
+			</div>
+
+			<div class="jumbotron"
+				style="margin-top: 2em; background-color: #252525">
+				<h4 style="margin-top: 1em; font-weight: bold">Étape 2 :
+					Présentation (JSF/Primefaces)</h4>
+				<p>Cette étape consiste à mettre en place une application WEB
+					basée sur la technologie JSF/Primefaces qui respecte les
+					contraintes suivantes :</p>
+
+				<ul>
+					<li>Utilisation d'AJAX pour les phases de modification des CVs
+						et des informations personnelles.</li>
+					<li>Utilisation de pages multiples pour le parcours de la
+						liste des CVs.</li>
+				</ul>
+			</div>
+
+			<div class="jumbotron"
+				style="margin-top: 2em; background-color: #252525">
+				<h4 style="margin-top: 1em; font-weight: bold">Mentions spéciales</h4>
+				<p>Ce projet réutilise une image réalisée par Freepik pour l'affichage des pages d'erreur,
+				accessible ci-dessous :</p>
+
+				<ul>
+					<li><a href="https://www.freepik.com/free-photos-vectors/business">Business vector created by freepik - www.freepik.com</a></li>
+				</ul>
+			</div>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

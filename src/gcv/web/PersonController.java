@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.embeddable.EJBContainer;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
@@ -41,7 +42,7 @@ public class PersonController {
 	@EJB(beanName = "jpadao")
 	private Dao dao;
 
-	private Person selectedPerson = null;
+	private Person selectedPerson = new Person();
 	private String firstName = "", lastName = "", activityTitle = "";
 	
 	public Person getSelectedPerson() {
@@ -109,7 +110,7 @@ public class PersonController {
 	 */
 	public String showPersons() {
 		System.out.println("Redirecting to showPersons page...");
-		return "showPersons";
+		return "show-persons";
 	}
 
 	/**
@@ -119,19 +120,31 @@ public class PersonController {
 	 * @return la page showPerson.
 	 */
 	public String showPerson(Person person) {
-		selectedPerson = person;
+		selectedPerson = dao.read(Person.class, person.getPersonID());
 
 		System.out.println("Redirecting to showPerson page...");
-		return "showPerson";
+		return "show-person";
 	}
 
+	/**
+	 * Methode showEditPerson : Controleur de la page d'édition des informations
+	 * d'une personne.
+	 * 
+	 * @return la page editPerson.
+	 */
+	public String showEditPerson(Person person) {
+		selectedPerson = person;
+		return "edit-person";
+	}	
+	
 	/**
 	 * Methode editPerson : Fonction de modification des informations d'une personne
 	 * 
 	 * @return la page showPerson.
 	 */
-	public String editPerson() {
-		dao.update(Person.class);
-		return "showPerson";
+	public String updatePerson(Person person) {
+		dao.update(person);
+		
+		return "show-person";
 	}
 }

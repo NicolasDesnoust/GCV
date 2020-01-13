@@ -61,7 +61,7 @@ public class LoginController {
 	
 	public String showLogin() {
 		System.err.println("Redirecting to login page ...");
-		return "login?faces-redirect=true";
+		return "login";
 	}
 	
 	public String logoutUser() {
@@ -89,5 +89,14 @@ public class LoginController {
 		}
 		
 		return currentUser;
+	}
+	
+	public boolean isCurrentUser(Person person) {
+		Person currentUser = getCurrentUser();
+		
+		if (person == null || currentUser == null)
+			return false;
+		
+		return person.getPersonID().equals(getCurrentUser().getPersonID());
 	}
 }

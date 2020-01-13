@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/complexLayout.xhtml">
+	<ui:define name="content">
+
+		<h4 style="margin-top: 2em; font-weight: bold">Modifier les
+			informations personnelles</h4>
+		<c:set var="p" value="#{personController.selectedPerson}" />
+		<h:form>
+
+			<div class="ui-g edit-page">
+				<div class="ui-g-12">
+					<p:messages id="msgs" />
+				</div>
+				<div class="ui-g-6 ui-float-label">
+					<p:outputLabel for="firstName" value="First Name:" />
+					<p:inputText id="firstName"
+						value="#{personController.selectedPerson.firstName}"
+						styleClass="form-control" required="true">
+						<f:validateLength minimum="3" maximum="50" />
+						<p:ajax update="msgFirstName" event="keyup" />
+					</p:inputText>
+				</div>
+				<div class="ui-g-6 ui-float-label">
+					<p:outputLabel for="lastName" value="Last Name:" />
+					<p:inputText id="lastName" value="#{p.lastName}"
+						styleClass="form-control" required="true">
+						<f:validateLength minimum="3" maximum="50" />
+						<p:ajax update="msgLastName" event="keyup" />
+					</p:inputText>
+				</div>
+				<div class="ui-g-6">
+					<p:message for="firstName" id="msgFirstName" />
+				</div>
+				<div class="ui-g-6">
+					<p:message for="lastName" id="msgLastName" />
+				</div>
+				<div class="ui-g-12 ui-float-label">
+					<p:outputLabel for="mail" value="Mail:" />
+					<p:inputText id="mail" value="#{p.mail}" styleClass="form-control"
+						required="true">
+						<f:validator validatorId="gcv.validators.EmailValidator" />
+						<p:ajax update="msgMail" event="keyup" />
+					</p:inputText>
+				</div>
+				<div class="ui-g-6">
+					<p:message for="mail" id="msgMail" />
+				</div>
+				<div class="ui-g-6"/>
+				<div class="ui-g-12 ui-float-label">
+					<p:outputLabel for="webSite" value="Web Site:" />
+					<p:inputText id="webSite" value="#{p.webSite}"
+						styleClass="form-control">
+						<f:validator validatorId="gcv.validators.WebsiteValidator" />
+						<p:ajax update="msgWebSite" event="keyup" />
+					</p:inputText>
+				</div>
+				<div class="ui-g-6">
+					<p:message for="webSite" id="msgWebSite" />
+				</div>
+				<div class="ui-g-6"/>
+				<div class="ui-g-6 ui-float-label">
+					<p:outputLabel for="birthDate" value="Birthday:" />
+					<p:datePicker id="birthDate" value="#{p.birthDate}"
+						style="width:100%" required="true">
+						<p:ajax update="msgBirthDate" event="keyup" />
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</p:datePicker>
+				</div>
+				<div class="ui-g-6" />
+				<div class="ui-g-6">
+					<p:message for="birthDate" id="msgBirthDate" />
+				</div>
+				<div class="ui-g-12">
+					<p:separator style="width:80%;" />
+				</div>
+
+				<div class="ui-g-4 ui-g-offset-4">
+					<div class="ui-inputgroup">
+						<p:commandButton onclick="history.go(-1)" styleClass="left-button"
+							icon="fas fa-arrow-left" value="Back" />
+						<p:commandButton styleClass="right-button" icon="pi pi-save"
+							action="#{personController.updatePerson(p)}" iconPos="right"
+							value="Save">
+							<f:ajax execute="@form" render="@form" />
+						</p:commandButton>
+					</div>
+				</div>
+
+			</div>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
+
+</html>

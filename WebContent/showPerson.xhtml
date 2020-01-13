@@ -7,70 +7,106 @@
 
 <ui:composition template="/template/complexLayout.xhtml">
 	<ui:define name="content">
-
+		<h4 style="margin-top: 2em; font-weight: bold">Aperçu du profil</h4>
 		<c:set var="p" value="#{personController.selectedPerson}" />
 		<h:form id="form">
 			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 
-			<p:accordionPanel style="margin-top:2em">
-				
-				<p:tab title="#{p.firstName} #{p.lastName}" style="font-weight:bold">
+			<p:panel style="margin-top:2em;padding:0">
+				<f:facet name="header">
+					<i style="text-align: center;" class="fas fa-user-alt"></i> Informations personnelles
+					<div style="float: right">
+						<p:commandButton rendered="#{loginController.isCurrentUser(p)}" action="#{personController.showEditPerson(p)}"
+							styleClass="btn btn-info" icon="pi pi-pencil" value="Modifier" />
 
-					<h:panelGrid columns="2" style="width:100%; height:100%">
+					</div>
+				</f:facet>
+				<div class="ui-g">
+					<div class="ui-g-4" style="text-align: center; padding-bottom: 0">
+						<h:outputText style="font-weight:bold" value="FIRSTNAME" />
+					</div>
+					<div class="ui-g-4" style="text-align: center; padding-bottom: 0">
+						<h:outputText style="font-weight:bold" value="LASTNAME" />
+					</div>
+					<div class="ui-g-4" style="text-align: center; padding-bottom: 0">
+						<h:outputText style="font-weight:bold" value="BIRTH DATE" />
+					</div>
+					<div id="firstName" style="text-align: center; padding-top: 0"
+						class="ui-g-4 capitalized">#{p.firstName}</div>
+					<div id="lastName" style="text-align: center; padding-top: 0"
+						class="ui-g-4 capitalized">#{p.lastName}</div>
+					<div id="birthDate" style="text-align: center; padding-top: 0"
+						class="ui-g-4 capitalized">
+						<h:outputText value="#{p.birthDate}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>
+					</div>
 
-						<h:outputText value="Mail:" style="font-weight: bold" />
-						<h:outputText value="#{p.mail}" />
+					<p:separator class="ui-g-12"
+						style="border: 0.01px solid d7d6d6;width:70%; height:0; padding:0" />
 
-						<h:outputText value="Birthday:" style="font-weight: bold" />
-						<h:outputText value="#{p.birthDate}" />
-
-						<h:outputText value="Web Site:" style="font-weight: bold" />
-						<h:outputText value="#{p.webSite}" />
-					</h:panelGrid>
-				</p:tab>
-			</p:accordionPanel>
-
-			<div>
-				<p:button outcome="editPerson" styleClass="btn btn-info"
-					icon="pi pi-refresh" value="Edit" />
-
-			</div>
-
-			<h3>Activities</h3>
-			<p:accordionPanel style="margin-top:0.5em" var="activity"
-				value="#{activityController.activities}">
-				<p:tab title="#{activity.title}">
-
-					<h:panelGrid columns="2" style="width:100%; height:100%">
-
-						<h:outputText value="Nature:" style="font-weight: bold" />
-						<h:outputText value="#{activity.nature}" />
-
-						<h:outputText value="Year:" style="font-weight: bold" />
-						<h:outputText value="#{activity.year}" />
-
-						<h:outputText value="Web Address:" style="font-weight: bold" />
-						<h:outputText value="#{activity.webAddress}" />
-
-						<h:outputText value="Description" style="font-weight: bold" />
-						<h:outputText value="#{activity.description}" />
-
-					</h:panelGrid>
-				</p:tab>
-
-			</p:accordionPanel>
-
-			<div>
-				<p:button outcome="createActivity" styleClass="btn btn-success"
-					icon="pi pi-plus-circle" value="Add" />
-				<p:button outcome="editActivity" styleClass="btn btn-info"
-					icon="pi pi-refresh" value="Edit" />
-				<p:button styleClass="btn btn-danger" icon="pi pi-minus-circle"
-					value="Delete" />
-			</div>
+					<div class="ui-g-4" style="text-align: center; padding-bottom: 0">
+						<h:outputText style="font-weight:bold" value="E-MAIL" />
+					</div>
+					<div class="ui-g-4" style="text-align: center; padding-bottom: 0">
+						<h:outputText style="font-weight:bold" value="WEBSITE" />
+					</div>
+					<div class="ui-g-4"></div>
+					<div id="mail" style="text-align: center; padding-top: 0"
+						class="ui-g-4 ">#{p.mail}</div>
+					<div id="website" style="text-align: center; padding-top: 0"
+						class="ui-g-4 ">#{p.webSite}</div>
+					<div class="ui-g-4"></div>
 
 
+				</div>
+			</p:panel>
 		</h:form>
+
+		<ui:insert name="workExpBlock">
+			<ui:include src="/template/activitiesBlock.xhtml">
+
+				<ui:param name="blockTitle" value="Expériences professionnelles" />
+				<ui:param name="blockNature" value="WORK_EXP" />
+				<ui:param name="blockInfo"
+					value="Vous n'avez pas renseigné d'expériences professionnelles." />
+
+			</ui:include>
+		</ui:insert>
+
+		<ui:insert name="educationBlock">
+			<ui:include src="/template/activitiesBlock.xhtml">
+
+				<ui:param name="blockTitle" value="Formations" />
+				<ui:param name="blockNature" value="EDUCATION" />
+				<ui:param name="blockInfo"
+					value="Vous n'avez pas renseigné de formations." />
+
+			</ui:include>
+		</ui:insert>
+
+		<ui:insert name="projectsBlock">
+			<ui:include src="/template/activitiesBlock.xhtml">
+
+				<ui:param name="blockTitle" value="Projets" />
+				<ui:param name="blockNature" value="PROJECT" />
+				<ui:param name="blockInfo"
+					value="Vous n'avez pas renseigné de projets." />
+
+			</ui:include>
+		</ui:insert>
+
+		<ui:insert name="othersBlock"
+			rendered="#{activityController.getActivitiesCount(activityController.getActivities(), 'OTHER') != 0}">
+			<ui:include src="/template/activitiesBlock.xhtml">
+
+				<ui:param name="blockTitle" value="Autres activités" />
+				<ui:param name="blockNature" value="OTHER" />
+				<ui:param name="blockInfo"
+					value="Vous n'avez pas renseigné d'autres types d'activités." />
+
+			</ui:include>
+		</ui:insert>
 
 	</ui:define>
 </ui:composition>

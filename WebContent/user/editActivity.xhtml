@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/template/complexLayout.xhtml">
+	<ui:define name="content">
+
+		<h4 style="margin-top: 2em; font-weight: bold">Modifier une
+			activité</h4>
+		<c:set var="act" value="#{activityController.selectedActivity}" />
+		<h:form>
+
+			<div class="ui-g edit-page">
+				<div class="ui-g-12">
+					<p:messages id="msgs" />
+				</div>
+				<div class="ui-g-6 ui-float-label">
+					<p:outputLabel for="title" value="Title:" />
+					<p:inputText id="title" value="#{act.title}"
+						styleClass="form-control" required="true">
+						<f:validateLength minimum="3" maximum="50" />
+						<p:ajax update="msgTitle" event="keyup" />
+					</p:inputText>
+				</div>
+				<o:importConstants type="gcv.beans.Nature" />
+				<div class="ui-g-6 ui-float-label">
+					<p:outputLabel for="nature" value="Nature:" />
+					<p:selectOneMenu id="nature" value="#{act.nature}" required="true"
+						style="width:100%">
+						<f:selectItems value="#{Nature}" />
+						<p:ajax update="msgNature" event="change" />
+					</p:selectOneMenu>
+				</div>
+				<div class="ui-g-6">
+					<p:message for="title" id="msgTitle" />
+				</div>
+				<div class="ui-g-6">
+					<p:message for="nature" id="msgNature" />
+				</div>
+				<div class="ui-g-6 ui-float-label">
+					<p:outputLabel for="year" value="Year:" />
+					<p:inputText id="year" value="#{act.year}"
+						styleClass="form-control" required="true"
+						converter="javax.faces.Integer">
+						<f:validateLongRange minimum="1900" maximum="2020" />
+						<p:ajax update="msgYear" event="keyup" />
+					</p:inputText>
+				</div>
+
+				<div class="ui-g-6 ui-float-label">
+					<p:outputLabel for="webAddress" value="Web Address:" />
+					<p:inputText id="webAddress" value="#{act.webAddress}"
+						styleClass="form-control">
+						<f:validator validatorId="gcv.validators.WebsiteValidator" />
+						<p:ajax update="msgWebAddress" event="keyup" />
+					</p:inputText>
+				</div>
+				<div class="ui-g-6">
+					<p:message for="year" id="msgYear" />
+				</div>
+				<div class="ui-g-6">
+					<p:message for="webAddress" id="msgWebAddress" />
+				</div>
+				<div class="ui-g-12 ui-float-label">
+					<p:outputLabel for="description" value="Description:" />
+					<p:inputTextarea id="description" value="#{act.description}"
+						style="width:100%" rows="3" cols="50" maxlength="255"
+						autoResize="false">
+						<p:ajax update="msgDescription" event="keyup" />
+						<f:validateLength minimum="10" maximum="255" />
+					</p:inputTextarea>
+				</div>
+				<div class="ui-g-12">
+					<p:message for="description" id="msgDescription" />
+				</div>
+				<div class="ui-g-12">
+					<p:separator style="width:80%;" />
+				</div>
+
+				<div class="ui-g-4 ui-g-offset-4">
+					<div class="ui-inputgroup">
+						<p:commandButton onclick="history.go(-1)" styleClass="left-button"
+							icon="fas fa-arrow-left" value="Back" />
+						<p:commandButton styleClass="right-button" icon="pi pi-save"
+							action="#{activityController.updateActivity(act)}" iconPos="right"
+							value="Save">
+							<f:ajax execute="@form" render="@form" />
+						</p:commandButton>
+					</div>
+				</div>
+
+			</div>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>
+
+</html>
